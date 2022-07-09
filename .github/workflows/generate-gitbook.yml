@@ -1,0 +1,45 @@
+name: generate-gitbook
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  generate-gitbook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout master
+      uses: actions/checkout@v3
+      with:
+        ref: master
+        fetch-depth: 0
+
+    # FIXME:
+    # `gitbook install` will fail with `TypeError: cb.apply is not a function`
+    # if we use `actions/setup-node@v2` or `actions/setup-node@v3` here.
+    - name: Install node.js
+      uses: actions/setup-node@v1
+
+    - name: Configure gitbook
+      run: |
+        npm install -g gitbook-cli
+        gitbook install
+
+    - name: Generate gitbook
+      run: |
+        gitbook build
+
+    - name: Publish gitbook
+      env:
+        REPO: https://${{ secrets.TOKEN }}@github.com/${{ github.repository }}
+        USERNAME: Gitbook Publisher [BOT]
+        EMAIL: geekgame@pku.edu.cn
+      run: |
+        git checkout gh-pages || git checkout --orphan gh-pages
+        git --work-tree=_book add -A .
+        git diff --cached --quiet --exit-code && exit
+        git config user.name "${USERNAME}"
+        git config user.email "${EMAIL}"
+        git commit -m "Generating gitbook at $(date)"
+        git push "${REPO}" gh-pages
